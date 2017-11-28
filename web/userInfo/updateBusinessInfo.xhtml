@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                template="../layout.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <f:metadata>
+        <f:event listener="#{app.setTitle('Info financière')}" type="preRenderView" />
+        <f:event listener="#{userController.registerConnectedUser()}" type="preRenderView" />
+    </f:metadata>
+
+    <ui:define name="content">
+        <h:form>
+            <p:growl id="msgs" showDetail="true" autoUpdate="true"/>
+
+            <p:panel id="basic" header="Information financière" style="margin-bottom:20px">
+                <h:panelGrid columns="2" cellpadding="10">
+                    <h:outputText value="Chiffre d'affaire max: *" />
+                    <p:inputNumber value="#{userController.connectedUser.CAMax}" symbol="€" symbolPosition="s" minValue="0.00"/>
+
+                    <h:outputText value="Taux de charge (%): *" />
+                    <p:inputNumber value="#{userController.connectedUser.taxes}" symbol="%" symbolPosition="s" maxValue="100" minValue="0.00"/>
+
+                    <p:commandButton actionListener="#{userController.saveBusinessInfo()}" value="Enregistrer" update="msgs"/>
+                </h:panelGrid>
+            </p:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>

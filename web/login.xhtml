@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+                template="./layout.xhtml"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <h:panelGrid columns="1" style="margin: 0 auto;">
+            <p:panel>
+                <h1>#{app.appFullName}</h1>
+                <h:form onsubmit="action = 'j_security_check';"
+                        prependId="false">
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <p:outputLabel for="j_username" value="Mail:"/>
+                        <p:inputText id="j_username"/>
+                        <h:outputLabel for="j_password" value="Mot de passe :"/>
+                        <p:password id="j_password"/>
+                        <p:spacer/>
+                        <p:commandButton value="Se connecter"
+                                         ajax="false"
+                                         icon="fa fa-sign-in"/>
+                    </h:panelGrid>
+                </h:form>
+                <h:form>
+                    <p:commandLink id="nonAjax" onclick="PF('inscription').show();">
+                        <h:outputText value="Créer un compte" />
+                    </p:commandLink>
+                </h:form>
+            </p:panel>
+        </h:panelGrid>
+
+        <p:dialog header="Inscription" widgetVar="inscription" modal="true">
+            <h:form style="max-width: 420px">
+
+            <p:growl id="growl" sticky="true" showDetail="true"/>
+
+                <p:panel>
+                    <p:messages id="messages" showDetail="true" autoUpdate="true"/>
+                    <h:panelGrid columns="2" columnClasses="label, value">
+                        <h:outputText value="E-mail *" />
+                        <p:inputText value="#{userController.loginUser.userName}" required="true" label="E-mail" validatorMessage="Email au format non valide">
+                            <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
+                            <f:validator validatorId="uniqueEmailValidator" />
+                            <f:ajax event="blur" render="messages" />
+                        </p:inputText>
+
+                        <h:outputText for="pwd1" value="Mot de passe: *" />
+                        <p:password id="pwd1" value="#{userController.password1}" match="pwd2" label="Password 1" required="true" />
+
+                        <h:outputText for="pwd2" value="Confirmez : *" />
+                        <p:password id="pwd2" value="#{userController.password2}" label="Password 2" required="true" />
+
+                        <p:spacer height="15" />
+                        <p:spacer height="15" />
+
+                        <h:outputText value="Prénom: *" />
+                        <p:inputText value="#{userController.user.firstName}" required="true" label="Prénom"/>
+
+                        <h:outputText value="Nom: *" />
+                        <p:inputText value="#{userController.user.lastName}" required="true" label="Nom"/>
+
+                        <h:outputText value="Téléphone: " />
+                        <p:inputMask id="phone" value="#{userController.user.phone}" mask="09-99-99-99-99"/>
+
+                        <h:outputText value="Date de naissance:" />
+                        <p:calendar id="mask" value="#{userController.user.birthDate}" pattern="dd/MM/yyyy" mask="true" />
+
+                        <h:outputText value="Adresse:" />
+                        <p:inputTextarea rows="2" cols="22" value="#{userController.connectedUser.adress}"/>
+
+                        <h:outputText value="Code postal:" />
+                        <p:inputMask value="#{userController.connectedUser.zipcode}" mask="99999"/>
+
+                        <h:outputText value="Ville:" />
+                        <p:inputText value="#{userController.connectedUser.city}"/>
+
+                        <p:spacer height="15" />
+                        <p:spacer height="15" />
+
+                        <h:outputText value="Chiffre d'affaire max: *" />
+                        <p:inputNumber value="#{userController.user.CAMax}" symbol="€" symbolPosition="s" emptyValue="zero" minValue="0.00"/>
+
+                        <h:outputText value="Taux de charge (%): *" />
+                        <p:inputNumber value="#{userController.user.taxes}" symbol="%" symbolPosition="s" emptyValue="zero" maxValue="100" minValue="0.00"/>
+
+                        <p:spacer height="15" />
+                        <p:spacer height="15" />
+
+                        <p:commandButton actionListener="#{userController.insertUser()}"
+                                         value="Inscription"
+                                         update="growl"/>
+                    </h:panelGrid>
+                </p:panel>
+            </h:form>
+        </p:dialog>
+
+    </ui:define>
+
+</ui:composition>
