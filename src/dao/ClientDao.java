@@ -1,4 +1,10 @@
 package dao;
 
-public class ClientDao {
+import entity.Client;
+
+import javax.faces.bean.ApplicationScoped;
+
+@ApplicationScoped
+public class ClientDao extends SimpleDAO<Client> {
+
 }
