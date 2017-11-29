@@ -53,16 +53,12 @@ public class UserController implements Serializable{
         return userDAO.existEmail(mail);
     }
 
-    public String currentUserName(){
-        return FacesTools.getRequest().getUserPrincipal().getName();
-    }
-
     public void registerConnectedUser(){
-        this.connectedUser = userDAO.findByMail(this.currentUserName());
+        this.connectedUser = userDAO.findByUserName(FacesTools.currentUserName());
     }
 
     public void saveConnexionInfo(){
-        if(!currentUserName().equals(connectedUser.getLoginUser().getUserName())){
+        if(!FacesTools.currentUserName().equals(connectedUser.getLoginUser().getUserName())){
             if(userDAO.existEmail(connectedUser.getLoginUser().getUserName())){
                 FacesTools.addFlashMessage(FacesMessage.SEVERITY_ERROR, "Ce mail est déjà utilisé.");
                 return;

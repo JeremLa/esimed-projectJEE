@@ -1,6 +1,7 @@
 package entity;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
 
@@ -11,8 +12,11 @@ public class Client extends Person implements Serializable {
     private String mail;
     private String contactName;
 
-    public Client (){
+    @ManyToOne
+    private User user;
 
+    public Client (){
+        this.enterprise = false;
     }
 
     public Boolean isEnterprise() {
@@ -41,6 +45,14 @@ public class Client extends Person implements Serializable {
 
     public void setContactName(String contactName) {
         this.contactName = contactName;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
@@ -72,6 +84,6 @@ public class Client extends Person implements Serializable {
                 "enterprise=" + enterprise +
                 ", mail='" + mail + '\'' +
                 ", contactName='" + contactName + '\'' +
-                "} " + super.toString();
+                    "} " + super.toString();
     }
 }

@@ -8,21 +8,37 @@
                 xmlns:mep="http://MicroEnterpriseProject/tags">
     <f:metadata>
         <f:event listener="#{app.setTitle('Liste clients')}" type="preRenderView" />
-        <f:event listener="#{clientController.initList()}" type="preRenderView" />
     </f:metadata>
 
     <ui:define name="content">
-        <p:panel>
-            <h:form id="form">
+        <p:panel header="Liste des clients">
+            <h:form id="listClients">
+
                 <p:growl id="msgs" showDetail="true" />
-                <p:dataTable id="basicDT"  widgetVar="clientTable" var="client" value="#{clientController.clients}" emptyMessage="Aucune client à afficher">
-                    <f:facet name="header">
-                        <p:outputPanel>
-                            <p:commandButton onclick="PF('createClient').show()" value="Nouveau client" icon="fa fa-user-plus" />
-                        </p:outputPanel>
-                    </f:facet>
-                    <p:column headerText="Nom">
-                        <h:outputText value="#{client.firstName} #{client.lastName}" />
+
+                <p:outputPanel>
+                    <p:commandButton actionListener="#{clientController.fromList()}" onclick="PF('createClient').show()" value="Nouveau client" icon="fa fa-user-plus" />
+                    <p:inputText value="#{clientController.search}" placeholder="Rechercher">
+                        <p:ajax event="keyup" listener="#{clientController.searchAction()}" process="@this" update="listClients"/>
+                    </p:inputText>
+                </p:outputPanel>
+
+                <p:spacer height="10px" />
+
+                <p:dataTable  widgetVar="clientTable" var="client" value="#{clientController.clients}" emptyMessage="Aucune client à afficher">
+                    <p:column filterBy="#{client.enterprise}" headerText="Type" style="margin: 0 auto; width: 150px; text-align: center;">
+                        <f:facet name="filter">
+                            <p:selectOneMenu onchange="PF('clientTable').filter()" >
+                                <f:selectItem itemLabel="Tous" itemValue="" />
+                                <f:selectItem itemValue="true" itemLabel="Entreprise" />
+                                <f:selectItem itemValue="false" itemLabel="Particulier" />
+                                <f:converter converterId="javax.faces.Boolean" />
+                            </p:selectOneMenu>
+                        </f:facet>
+                        <i class="#{client.enterprise ? 'fa fa-building' : 'fa fa-user'}"></i>
+                    </p:column>
+                    <p:column headerText="Nom" >
+                        <h:outputText value="#{client.firstName} #{client.lastName}"/>
                     </p:column>
                     <p:column headerText="Adresse">
                         <h:outputText value="#{client.adress} #{client.zipcode} #{client.city}" />
@@ -34,7 +50,7 @@
                         <h:outputText value="#{client.mail}" />
                     </p:column>
                     <p:column style="width:32px;text-align: center">
-                        <p:commandButton update=":form:carDetail"  icon="ui-icon-search" title="View" />
+                        <p:commandButton update="@form"  icon="ui-icon-search" title="View" />
                     </p:column>
                 </p:dataTable>
             </h:form>

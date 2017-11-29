@@ -1,56 +1,67 @@
 package controller;
 
 import dao.ClientDao;
+import dao.UserDAO;
 import entity.Client;
+import entity.User;
+import org.primefaces.context.RequestContext;
 import tools.FacesTools;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
+import javax.annotation.PostConstruct;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
-@SessionScoped
+@ViewScoped
 @Named
 public class ClientController implements Serializable{
     @Inject
     private ClientDao clientDao;
+    @Inject
+    private UserDAO userDAO;
+    private Client client;
+    private List<Client> clients;
+    private Boolean fromList;
+    private String search;
 
-    private Client client = new Client();
-    private List<Client> clients = new ArrayList<Client>();
-
-    private Boolean enterprise = false;
-
-    public Boolean getEnterprise() {
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! "+this.enterprise);
-
-        return enterprise;
-    }
-
-    public void addMessage() {
-        String summary = enterprise ? "Checked" : "Unchecked";
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(summary));
-    }
-
-    public void setEnterprise(Boolean enterprise) {
-        this.enterprise = enterprise;
-
-        System.out.println("//////////////////////////////////////////// "+this.enterprise);
-    }
-
-    public void createUserLink(){
-        FacesTools.redirect("/client/createClient.xhtml");
+    @PostConstruct
+    public void init(){
+        this.client = new Client();
+        this.fromList = false;
+        initList();
     }
 
     public void initList(){
-        clients = clientDao.getAll(Client.class);
+        clients = clientDao.getAllByUser(userDAO.findByUserName(FacesTools.currentUserName()));
     }
 
     public void insertClient(){
-        System.out.println(client);
+
+        User connectedUser = userDAO.findByUserName(FacesTools.currentUserName());
+        client.setUser(connectedUser);
+        clientDao.insert(client);
+
+        initList();
+
+        if(fromList){
+            RequestContext context = RequestContext.getCurrentInstance();
+            context.execute("PF('createClient').hide();");
+            context.update("listClients");
+        }
+    }
+
+    public void searchAction(){
+        if("".equals(search) || search == null){
+            initList();
+        }else{
+            clients = clientDao.searchClient(search);
+        }
+    }
+
+    public void fromList(){
+        this.fromList = true;
     }
 
     public Client getClient() {
@@ -67,5 +78,13 @@ public class ClientController implements Serializable{
 
     public void setClients(List<Client> clients) {
         this.clients = clients;
+    }
+
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
     }
 }

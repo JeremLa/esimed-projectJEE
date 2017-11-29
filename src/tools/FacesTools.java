@@ -62,4 +62,9 @@ public class FacesTools {
         flash.setRedirect(true);
         facesContext.addMessage(null, new FacesMessage(severity, String.format(msg, args), ""));
     }
+
+    @Named
+    public static String currentUserName(){
+        return getRequest().getUserPrincipal().getName();
+    }
 }

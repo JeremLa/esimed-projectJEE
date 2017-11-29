@@ -2,8 +2,8 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:p="http://primefaces.org/ui"
-                xmlns:f="http://xmlns.jcp.org/jsf/core">
+                xmlns:p="http://primefaces.org/ui">
+
     <h:form rendered="#{p:userPrincipal() != null}">
         <p:growl id="messages"/>
 
@@ -22,7 +22,7 @@
                 <p:menuitem value="Redo" url="#" icon="ui-icon-arrowreturnthick-1-e" />
             </p:submenu>
 
-            <p:submenu label=" #{userController.currentUserName()} " icon="ui-icon-info">
+            <p:submenu label=" #{facesTools.currentUserName()} " icon="ui-icon-info">
                 <p:menuitem value="Informations de connexion" url="/userInfo/updateConnexionInfo.xhtml"/>
                 <p:menuitem value="Informations financière" url="/userInfo/updateBusinessInfo.xhtml"/>
                 <p:menuitem value="Informations personnel" url="/userInfo/updatePersonnalInfo.xhtml"/>
@@ -30,4 +30,5 @@
             </p:submenu>
         </p:menubar>
     </h:form>
+
 </ui:composition>
