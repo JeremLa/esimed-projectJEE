@@ -3,6 +3,7 @@ package controller;
 import dao.GroupDao;
 import dao.LoginUserDao;
 import dao.UserDAO;
+import entity.Client;
 import entity.Group;
 import entity.LoginUser;
 import entity.User;

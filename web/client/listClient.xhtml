@@ -8,6 +8,7 @@
                 xmlns:mep="http://MicroEnterpriseProject/tags">
     <f:metadata>
         <f:event listener="#{app.setTitle('Liste clients')}" type="preRenderView" />
+        <f:event listener="#{clientController.setEditMode(false)}" type="preRenderComponent" />
     </f:metadata>
 
     <ui:define name="content">
@@ -49,8 +50,18 @@
                     <p:column headerText="E-mail">
                         <h:outputText value="#{client.mail}" />
                     </p:column>
-                    <p:column style="width:32px;text-align: center">
-                        <p:commandButton update="@form"  icon="ui-icon-search" title="View" />
+                    <p:column style="text-align: center">
+                        <p:commandButton  icon="fa fa-eye" title="Détails" actionListener="#{clientController.displayClient(client)}" />
+
+                        <p:commandButton update="@form"  icon="fa fa-times" title="Supprimer" actionListener="#{clientController.removeClient(client)}" rendered="#{clientController.haveProject(client)}">
+                            <p:confirm header="Confirmation" message="Supprimer #{client.firstName} #{client.lastName} ?" icon="fa fa-exclamation" />
+                        </p:commandButton>
+
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                            <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-times" style="color: red"/>
+                            <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no"/>
+                        </p:confirmDialog>
+
                     </p:column>
                 </p:dataTable>
             </h:form>

@@ -5,14 +5,14 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <h:form style="max-width: 420px">
+    <h:form style="max-width: 420px" id="clientForm">
         <p:panel>
             <p:messages id="messages" showDetail="true" autoUpdate="true"/>
             <h:panelGrid columns="2" columnClasses="label, value">
 
                 <h:outputText value="Type: " />
                 <p:selectBooleanButton value="#{clientController.client.enterprise}" required="true" onLabel="Entreprise" offLabel="Particulier" onIcon="fa fa-building" offIcon="fa fa-user">
-                    <p:ajax update="@form"/>
+                    <p:ajax update="clientForm"/>
                 </p:selectBooleanButton>
 
                 <h:outputText value="Prénom :" rendered="#{clientController.client.enterprise == false}"/>
@@ -44,9 +44,8 @@
                 <p:spacer height="15" />
                 <p:spacer height="15" />
 
-                <p:commandButton actionListener="#{clientController.insertClient()}"
-                                 value="Enregistrer"
-                                 update="growl"/>
+                <p:commandButton actionListener="#{clientController.insertClient()}" value="Créer" update="growl" rendered="#{clientController.getEditMode() == false}"/>
+                <p:commandButton actionListener="#{clientController.updateClient()}" value="Modifier" update="growl" rendered="#{clientController.getEditMode() == true}"/>
             </h:panelGrid>
         </p:panel>
     </h:form>

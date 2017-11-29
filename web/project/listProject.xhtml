@@ -7,14 +7,6 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:mep="http://MicroEnterpriseProject/tags">
     <f:metadata>
-        <f:event listener="#{app.setTitle('Nouveau client')}" type="preRenderView" />
-        <f:event listener="#{clientController.setEditMode(false)}" type="preRenderView" />
+        <f:event listener="#{app.setTitle('Liste projets')}" type="preRenderView" />
     </f:metadata>
-
-    <ui:define name="content">
-        <p:panel>
-            <mep:createClientForm/>
-        </p:panel>
-    </ui:define>
-
 </ui:composition>

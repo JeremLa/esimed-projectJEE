@@ -1,6 +1,7 @@
 package controller;
 
 import dao.ClientDao;
+import dao.ProjectDao;
 import dao.UserDAO;
 import entity.Client;
 import entity.User;
@@ -8,6 +9,8 @@ import org.primefaces.context.RequestContext;
 import tools.FacesTools;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -21,10 +24,15 @@ public class ClientController implements Serializable{
     private ClientDao clientDao;
     @Inject
     private UserDAO userDAO;
+    @Inject
+    private ProjectDao projectDao;
+
     private Client client;
     private List<Client> clients;
     private Boolean fromList;
     private String search;
+    private Boolean editMode;
+    private Integer argId;
 
     @PostConstruct
     public void init(){
@@ -52,6 +60,41 @@ public class ClientController implements Serializable{
         }
     }
 
+    public void removeClient(Client client){
+
+        System.out.println("//////////////////////////////////// "+ client.getId() + "////////////////////////////////////");
+
+        clientDao.delete(client);
+        clients.remove(client);
+    }
+
+    public void updateClient(){
+        clientDao.update(client);
+
+        FacesTools.addFlashMessage(FacesMessage.SEVERITY_INFO, "Les modifications ont été enregistré.");
+    }
+
+    public void displayClient(Client client){
+        FacesTools.redirect("/client/display.xhtml?id="+client.getId());
+    }
+
+    public void initAskedClient(Integer id){
+        if(id != null){
+            argId = id;
+        }
+
+        if(argId != null){
+            client = clientDao.get(Client.class, argId);
+
+            if(client == null){
+                FacesTools.redirect("/client/listClient.xhtml");
+                FacesTools.addFlashMessage(FacesMessage.SEVERITY_INFO, "L'utilisateur demandé n'existe pas.");
+
+                RequestContext.getCurrentInstance().update("growl");
+            }
+        }
+    }
+
     public void searchAction(){
         if("".equals(search) || search == null){
             initList();
@@ -60,12 +103,24 @@ public class ClientController implements Serializable{
         }
     }
 
+    public void setEditMode(Boolean bool){
+        this.editMode = bool;
+    }
+
+    public Boolean getEditMode(){
+        return this.editMode;
+    }
+
     public void fromList(){
         this.fromList = true;
     }
 
     public Client getClient() {
         return client;
+    }
+
+    public Boolean haveProject(Client client){
+        return projectDao.clientHasProject(client);
     }
 
     public void setClient(Client client) {
@@ -86,5 +141,13 @@ public class ClientController implements Serializable{
 
     public void setSearch(String search) {
         this.search = search;
+    }
+
+    public Integer getArgId() {
+        return argId;
+    }
+
+    public void setArgId(Integer argId) {
+        this.argId = argId;
     }
 }

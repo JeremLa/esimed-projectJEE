@@ -10,11 +10,14 @@
         <p:menubar>
             <p:menuitem value="#{app.appFullName}" url="/index.xhtml"/>
 
-            <p:menuitem value="Clients" url="/client/listClient.xhtml"/>
+            <p:submenu label="Clients" icon="fa fa-address-book-o fa-fw">
+                <p:menuitem value=" Liste des clients" url="/client/listClient.xhtml" icon="fa fa-list-ul fa-fw" />
+                <p:menuitem value=" Ajouter un client" url="/client/createClient.xhtml" icon="fa fa-user-plus fa-fw" />
+            </p:submenu>
 
             <p:submenu label="Pojets" icon="ui-icon-pencil">
-                <p:menuitem value="Undo" url="#" icon="ui-icon-arrowreturnthick-1-w" />
-                <p:menuitem value="Redo" url="#" icon="ui-icon-arrowreturnthick-1-e" />
+                <p:menuitem value="Liste des projets" url="/project/listProject.xhtml" icon="ui-icon-arrowreturnthick-1-w" />
+                <p:menuitem value="Créer un projet" url="/project/createProject.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
             </p:submenu>
 
             <p:submenu label="Facturation" icon="ui-icon-pencil">
