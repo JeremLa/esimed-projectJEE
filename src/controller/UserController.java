@@ -1,6 +1,5 @@
 package controller;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import dao.GroupDao;
 import dao.LoginUserDao;
 import dao.UserDAO;
@@ -9,14 +8,9 @@ import entity.LoginUser;
 import entity.User;
 import org.primefaces.context.RequestContext;
 import tools.FacesTools;
-import tools.GrowlView;
-import tools.UniqueEmailValidator;
-
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.validator.ValidatorException;
-import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;

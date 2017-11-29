@@ -21,10 +21,6 @@ public class AppController implements Serializable{
         FacesTools.redirect("/index.xhtml");
     }
 
-    public Boolean onClientListPage(){
-        return "Liste clients".equals(title);
-    }
-
     public String getAppName(){
         return appName;
     }

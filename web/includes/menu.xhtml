@@ -10,10 +10,7 @@
         <p:menubar>
             <p:menuitem value="#{app.appFullName}" url="/index.xhtml"/>
 
-            <p:submenu label="Clients" icon="ui-icon-document">
-                <p:menuitem value="Lister" url="/clients/listClient.xhtml" icon="ui-icon-arrowreturnthick-1-w" />
-                <p:menuitem value="Nouveau" url="#" icon="ui-icon-arrowreturnthick-1-w" />
-            </p:submenu>
+            <p:menuitem value="Clients" url="/client/listClient.xhtml"/>
 
             <p:submenu label="Pojets" icon="ui-icon-pencil">
                 <p:menuitem value="Undo" url="#" icon="ui-icon-arrowreturnthick-1-w" />
@@ -31,10 +28,6 @@
                 <p:menuitem value="Informations personnel" url="/userInfo/updatePersonnalInfo.xhtml"/>
                 <p:menuitem value="Déconnexion" actionListener="#{app.logout()}" icon="ui-icon-close" />
             </p:submenu>
-
-            <f:facet name="options">
-                <p:inputText style="margin-right:10px" placeholder="Rechercher" rendered="#{app.onClientListPage()}"/>
-            </f:facet>
         </p:menubar>
     </h:form>
 </ui:composition>
