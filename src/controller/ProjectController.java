@@ -1,7 +1,7 @@
 package controller;
 
-import dao.ClientDao;
-import dao.ProjectDao;
+import dao.ClientDAO;
+import dao.ProjectDAO;
 import dao.UserDAO;
 import entity.Client;
 import entity.Project;
@@ -22,9 +22,9 @@ import java.util.List;
 @Named
 public class ProjectController implements Serializable{
     @Inject
-    private ProjectDao projectDao;
+    private ProjectDAO projectDAO;
     @Inject
-    private ClientDao clientDao;
+    private ClientDAO clientDAO;
     @Inject
     private UserDAO userDAO;
 
@@ -41,40 +41,17 @@ public class ProjectController implements Serializable{
         status = ProjectStatus.values();
 
         User currentUser = userDAO.findByUserName(FacesTools.currentUserName());
-        clients = clientDao.getAllByUser(currentUser);
+        clients = clientDAO.getAllByUser(currentUser);
 
-        projects = projectDao.getAll(Project.class);
+        projects = projectDAO.getAll(Project.class);
 
         defaultValue = ProjectStatus.STARTED.toString();
 
         RequestContext.getCurrentInstance().execute("PF('projectTable').filter()");
     }
 
-//    public void createProject(){
-//        projectDao.insert(project);
-//
-//        this.project = new Project();
-//
-//        FacesTools.addFlashMessage(FacesMessage.SEVERITY_INFO, "Projet créé avec succès.");
-//    }
-//
-//    public void updateProject(){
-//
-//        System.out.println("///////////////////////////////////////////// THIS.PROJECT :" + this.project);
-//
-//       try{
-//           projectDao.update(project);
-//
-//           FacesTools.addFlashMessage(FacesMessage.SEVERITY_INFO, "Le projet a bien été mis à jour.");
-//
-//           RequestContext.getCurrentInstance().execute("PF('modalForUpdateProject').hide()");
-//       }catch(Exception e){
-//            e.printStackTrace();
-//       }
-//    }
-
     public void removeProject(Project project){
-        projectDao.delete(project);
+        projectDAO.delete(project);
 
         this.project = new Project();
 
@@ -85,14 +62,6 @@ public class ProjectController implements Serializable{
         //TODO
         return true;
     }
-
-//    public void setProjectForModal(Project project){
-//
-//        System.out.println("///////////////////////////////////////// set project for modal ///////////////////////////////////////");
-//
-//        this.project = project;
-//        this.editMode = true;
-//    }
 
     public Project getProject() {
         return project;

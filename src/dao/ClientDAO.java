@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @ApplicationScoped
-public class ClientDao extends SimpleDAO<Client> {
+public class ClientDAO extends SimpleDAO<Client> {
     @Transactional
     public List<Client> searchClient(String search){
         return em.createQuery("SELECT c FROM Client c WHERE LOWER(c.lastName) LIKE :search " +

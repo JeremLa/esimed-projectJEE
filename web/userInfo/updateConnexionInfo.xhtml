@@ -7,7 +7,6 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
     <f:metadata>
         <f:event listener="#{app.setTitle('Info de connexion')}" type="preRenderView" />
-        <f:event listener="#{userController.registerConnectedUser()}" type="preRenderView" />
     </f:metadata>
 
     <ui:define name="content">
@@ -17,20 +16,20 @@
             <p:panel id="basic" header="Information de connexion" style="margin-bottom:20px">
                 <h:panelGrid columns="3" cellpadding="10">
                     <h:outputText value="E-mail *" />
-                    <p:inputText value="#{userController.connectedUser.loginUser.userName}" required="true" label="E-mail" validatorMessage="Email au format non valide" id="mail" title="Si vous modifiez votre adresse mail, vous serez déconnecté">
+                    <p:inputText value="#{loggedUserController.user.loginUser.userName}" required="true" label="E-mail" validatorMessage="Email au format non valide" id="mail" title="Si vous modifiez votre adresse mail, vous serez déconnecté">
                         <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
                     </p:inputText>
                     <p:tooltip id="toolTipFocus" for="mail" showEvent="focus" hideEvent="blur" />
 
                     <h:outputText for="pwd1" value="Mot de passe: *" />
-                    <p:password id="pwd1" value="#{userController.password1}" label="Password 1"/>
+                    <p:password id="pwd1" value="#{loggedUserController.password1}" label="Password 1"/>
                     <p:spacer/>
 
                     <h:outputText for="pwd2" value="Confirmez : *" />
-                    <p:password id="pwd2" value="#{userController.password2}" label="Password 2"/>
+                    <p:password id="pwd2" value="#{loggedUserController.password2}" label="Password 2"/>
                     <p:spacer/>
 
-                    <p:commandButton actionListener="#{userController.saveConnexionInfo()}" value="Enregistrer" update="msgs"/>
+                    <p:commandButton actionListener="#{loggedUserController.saveConnexionInfo()}" value="Enregistrer" update="msgs"/>
                 </h:panelGrid>
             </p:panel>
         </h:form>

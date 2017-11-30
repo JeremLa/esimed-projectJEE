@@ -26,6 +26,6 @@
     </tag>
     <tag>
         <tag-name>factureForm</tag-name>
-        <source>tags/facture/factureForm.xhtml</source>
+        <source>tags/bill/billForm.xhtml</source>
     </tag>
 </facelet-taglib>

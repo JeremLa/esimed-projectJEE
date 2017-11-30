@@ -54,34 +54,34 @@
                         <p:spacer height="15" />
 
                         <h:outputText value="Prénom: *" />
-                        <p:inputText value="#{userController.user.firstName}" required="true" label="Prénom"/>
+                        <p:inputText value="#{userController.newUser.firstName}" required="true" label="Prénom"/>
 
                         <h:outputText value="Nom: *" />
-                        <p:inputText value="#{userController.user.lastName}" required="true" label="Nom"/>
+                        <p:inputText value="#{userController.newUser.lastName}" required="true" label="Nom"/>
 
                         <h:outputText value="Téléphone: " />
-                        <p:inputMask id="phone" value="#{userController.user.phone}" mask="09-99-99-99-99"/>
+                        <p:inputMask id="phone" value="#{userController.newUser.phone}" mask="09-99-99-99-99"/>
 
                         <h:outputText value="Date de naissance:" />
-                        <p:calendar id="mask" value="#{userController.user.birthDate}" pattern="dd/MM/yyyy" mask="true" />
+                        <p:calendar id="mask" value="#{userController.newUser.birthDate}" pattern="dd/MM/yyyy" mask="true" />
 
                         <h:outputText value="Adresse:" />
-                        <p:inputTextarea rows="2" cols="22" value="#{userController.connectedUser.adress}"/>
+                        <p:inputTextarea rows="2" cols="22" value="#{userController.newUser.adress}"/>
 
                         <h:outputText value="Code postal:" />
-                        <p:inputMask value="#{userController.connectedUser.zipcode}" mask="99999"/>
+                        <p:inputMask value="#{userController.newUser.zipcode}" mask="99999"/>
 
                         <h:outputText value="Ville:" />
-                        <p:inputText value="#{userController.connectedUser.city}"/>
+                        <p:inputText value="#{userController.newUser.city}"/>
 
                         <p:spacer height="15" />
                         <p:spacer height="15" />
 
                         <h:outputText value="Chiffre d'affaire max: *" />
-                        <p:inputNumber value="#{userController.user.CAMax}" symbol="€" symbolPosition="s" emptyValue="zero" minValue="0.00"/>
+                        <p:inputNumber value="#{userController.newUser.CAMax}" symbol="€" symbolPosition="s" emptyValue="zero" minValue="0.00"/>
 
                         <h:outputText value="Taux de charge (%): *" />
-                        <p:inputNumber value="#{userController.user.taxes}" symbol="%" symbolPosition="s" emptyValue="zero" maxValue="100" minValue="0.00"/>
+                        <p:inputNumber value="#{userController.newUser.taxes}" symbol="%" symbolPosition="s" emptyValue="zero" maxValue="100" minValue="0.00"/>
 
                         <p:spacer height="15" />
                         <p:spacer height="15" />

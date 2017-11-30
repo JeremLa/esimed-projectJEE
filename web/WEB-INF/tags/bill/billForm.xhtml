@@ -10,7 +10,8 @@
             <p:messages id="messages" showDetail="false" autoUpdate="true"/>
             <h:panelGrid columns="2" columnClasses="label, value">
 
-
+                <h:outputText value="Numéro :"/>
+                <p:inputText value="#{billFormController.bill.billNumber}" label="Numéro"/>
 
                 <p:commandButton action="#{projectFormController.save()}" value="Créer" update="growl" rendered="#{projectFormController.getEditMode() == false}"/>
                 <p:commandButton action="#{projectFormController.update()}"

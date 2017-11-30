@@ -1,7 +1,7 @@
 package controller;
 
-import dao.ClientDao;
-import dao.ProjectDao;
+import dao.ClientDAO;
+import dao.ProjectDAO;
 import dao.UserDAO;
 import entity.Client;
 import entity.Project;
@@ -11,7 +11,6 @@ import tools.FacesTools;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -22,11 +21,13 @@ import java.util.List;
 @Named
 public class ClientController implements Serializable{
     @Inject
-    private ClientDao clientDao;
+    private ClientDAO clientDAO;
     @Inject
     private UserDAO userDAO;
     @Inject
-    private ProjectDao projectDao;
+    private ProjectDAO projectDAO;
+    @Inject
+    private User user;
 
     private Client client;
     private List<Client> clients;
@@ -43,14 +44,12 @@ public class ClientController implements Serializable{
     }
 
     public void initList(){
-        clients = clientDao.getAllByUser(userDAO.findByUserName(FacesTools.currentUserName()));
+        clients = clientDAO.getAllByUser(userDAO.findByUserName(FacesTools.currentUserName()));
     }
 
     public void insertClient(){
-
-        User connectedUser = userDAO.findByUserName(FacesTools.currentUserName());
-        client.setUser(connectedUser);
-        clientDao.insert(client);
+        client.setUser(user);
+        clientDAO.insert(client);
 
         initList();
 
@@ -65,12 +64,12 @@ public class ClientController implements Serializable{
 
         System.out.println("//////////////////////////////////// "+ client.getId() + "////////////////////////////////////");
 
-        clientDao.delete(client);
+        clientDAO.delete(client);
         clients.remove(client);
     }
 
     public void updateClient(){
-        clientDao.update(client);
+        clientDAO.update(client);
 
         FacesTools.addMessage(FacesMessage.SEVERITY_INFO, "Les modifications ont été enregistré.");
     }
@@ -85,7 +84,7 @@ public class ClientController implements Serializable{
         }
 
         if(argId != null){
-            client = clientDao.get(Client.class, argId);
+            client = clientDAO.get(Client.class, argId);
 
             if(client == null){
                 FacesTools.redirect("/client/listClient.xhtml");
@@ -97,14 +96,14 @@ public class ClientController implements Serializable{
     }
 
     public List<Project> getClientProjects(){
-        return projectDao.getAllByClient(client);
+        return projectDAO.getAllByClient(client);
     }
 
     public void searchAction(){
         if("".equals(search) || search == null){
             initList();
         }else{
-            clients = clientDao.searchClient(search);
+            clients = clientDAO.searchClient(search);
         }
     }
 
@@ -125,7 +124,7 @@ public class ClientController implements Serializable{
     }
 
     public Boolean haveProject(Client client){
-        return projectDao.clientHasProject(client);
+        return projectDAO.clientHasProject(client);
     }
 
     public void setClient(Client client) {

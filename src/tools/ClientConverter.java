@@ -1,7 +1,6 @@
 package tools;
 
-import dao.ClientDao;
-import dao.UserDAO;
+import dao.ClientDAO;
 import entity.Client;
 
 import javax.enterprise.inject.spi.CDI;
@@ -15,13 +14,13 @@ import javax.faces.convert.FacesConverter;
 @FacesConverter(forClass = Client.class)
 public class ClientConverter implements Converter{
 
-    private ClientDao clientDao = CDI.current().select(ClientDao.class).get();
+    private ClientDAO clientDAO = CDI.current().select(ClientDAO.class).get();
 
     @Override
     public Object getAsObject(FacesContext fc, UIComponent uic, String value) {
         if(value != null && value.trim().length() > 0) {
             try {
-                return clientDao.get(Client.class, Integer.parseInt(value));
+                return clientDAO.get(Client.class, Integer.parseInt(value));
             } catch(NumberFormatException e) {
                 throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Conversion Error", "Not a valid client."));
             }

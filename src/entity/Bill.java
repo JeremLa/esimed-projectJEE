@@ -4,12 +4,13 @@ import entity.enumerable.BillStatus;
 import entity.enumerable.PaymentMethods;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "mep_facture")
+@Table(name = "mep_bill")
 public class Bill extends BaseEntity implements Serializable{
     private int billNumber;
     private BillStatus billStatus;
@@ -18,6 +19,9 @@ public class Bill extends BaseEntity implements Serializable{
     private Date paidDate;
     private PaymentMethods paymentMethods;
     private String note;
+
+    @ManyToOne
+    private Project project;
 
     public Bill() {
     }
@@ -76,5 +80,13 @@ public class Bill extends BaseEntity implements Serializable{
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
     }
 }

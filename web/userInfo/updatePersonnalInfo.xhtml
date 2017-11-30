@@ -6,8 +6,7 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
     <f:metadata>
-        <f:event listener="#{app.setTitle('Info de connexion')}" type="preRenderView" />
-        <f:event listener="#{userController.registerConnectedUser()}" type="preRenderView" />
+        <f:event listener="#{app.setTitle('Info perso')}" type="preRenderView" />
     </f:metadata>
 
     <ui:define name="content">
@@ -17,27 +16,27 @@
             <p:panel id="basic" header="Information de connexion" style="margin-bottom:20px">
                 <h:panelGrid columns="2" cellpadding="10">
                     <h:outputText value="Prénom: *" />
-                    <p:inputText value="#{userController.connectedUser.firstName}" required="true" label="Prénom"/>
+                    <p:inputText value="#{loggedUserController.user.firstName}" required="true" label="Prénom"/>
 
                     <h:outputText value="Nom: *" />
-                    <p:inputText value="#{userController.connectedUser.lastName}" required="true" label="Nom"/>
+                    <p:inputText value="#{loggedUserController.user.lastName}" required="true" label="Nom"/>
 
                     <h:outputText value="Téléphone: " />
-                    <p:inputMask id="phone" value="#{userController.connectedUser.phone}" mask="09-99-99-99-99"/>
+                    <p:inputMask id="phone" value="#{loggedUserController.user.phone}" mask="09-99-99-99-99"/>
 
                     <h:outputText value="Date de naissance:" />
-                    <p:calendar id="mask" value="#{userController.connectedUser.birthDate}" pattern="dd/MM/yyyy" mask="true" />
+                    <p:calendar id="mask" value="#{loggedUserController.user.birthDate}" pattern="dd/MM/yyyy" mask="true" />
 
                     <h:outputText value="Adresse:" />
-                    <p:inputTextarea rows="2" cols="22" value="#{userController.connectedUser.adress}"/>
+                    <p:inputTextarea rows="2" cols="22" value="#{loggedUserController.user.adress}"/>
 
                     <h:outputText value="Code postal:" />
-                    <p:inputMask value="#{userController.connectedUser.zipcode}" mask="99999"/>
+                    <p:inputMask value="#{loggedUserController.user.zipcode}" mask="99999"/>
 
                     <h:outputText value="Ville:" />
-                    <p:inputText value="#{userController.connectedUser.city}"/>
+                    <p:inputText value="#{loggedUserController.user.city}"/>
 
-                    <p:commandButton actionListener="#{userController.savePersonnalInfo()}" value="Enregistrer" update="msgs"/>
+                    <p:commandButton actionListener="#{loggedUserController.savePersonnalInfo()}" value="Enregistrer" update="msgs"/>
                 </h:panelGrid>
             </p:panel>
         </h:form>

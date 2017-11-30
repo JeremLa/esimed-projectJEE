@@ -9,7 +9,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @ApplicationScoped
-public class ProjectDao extends SimpleDAO<Project>{
+public class ProjectDAO extends SimpleDAO<Project>{
 
     @Transactional
     public List<Project> getAllByClient(Client client){

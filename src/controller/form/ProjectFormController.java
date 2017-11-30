@@ -1,6 +1,6 @@
 package controller.form;
 
-import dao.ProjectDao;
+import dao.ProjectDAO;
 import entity.Project;
 import tools.FacesTools;
 
@@ -15,12 +15,12 @@ import java.io.Serializable;
 public class ProjectFormController implements Serializable{
 
     @Inject
-    private ProjectDao projectDao;
+    private ProjectDAO projectDAO;
     private Project project = new Project();
     private Boolean editMode = false;
 
     public void save(){
-        projectDao.insert(project);
+        projectDAO.insert(project);
 
         this.project = new Project();
 
@@ -28,7 +28,7 @@ public class ProjectFormController implements Serializable{
     }
 
     public void update(){
-        projectDao.update(project);
+        projectDAO.update(project);
         editMode = false;
 
         FacesTools.addMessage(FacesMessage.SEVERITY_INFO, "Le projet a bien été mis à jour.");
