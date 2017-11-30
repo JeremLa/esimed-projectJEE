@@ -1,6 +1,7 @@
 package controller.form;
 
 import dao.BillDAO;
+import dao.BillRowDAO;
 import dao.ProjectDAO;
 import entity.Bill;
 import entity.Project;
@@ -22,6 +23,8 @@ import java.util.List;
 public class BillFormController  implements Serializable{
     @Inject
     private BillDAO billDAO;
+    @Inject
+    private BillRowDAO billRowDAO;
     @Inject
     private ProjectDAO projectDAO;
     @Inject
@@ -58,6 +61,16 @@ public class BillFormController  implements Serializable{
         FacesTools.addMessage(FacesMessage.SEVERITY_INFO, "Les modifications de la facture ont bien été enregistré.");
     }
 
+    public void delete (Bill bill) {
+        billDAO.delete(bill);
+
+        FacesTools.addMessage(FacesMessage.SEVERITY_INFO, "La facture a bien été supprimé.");
+    }
+
+    public boolean haveBillRow(Bill bill){
+        return billRowDAO.getByBill(bill).size() > 0;
+    }
+
     private void generateBillNumber(){
         Integer number = billDAO.getSequentNumber(user);
         bill.setBillNumber(number);
@@ -68,6 +81,7 @@ public class BillFormController  implements Serializable{
     }
 
     public void setBill(Bill bill) {
+        editMode = true;
         this.bill = bill;
     }
 

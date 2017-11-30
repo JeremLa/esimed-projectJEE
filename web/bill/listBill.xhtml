@@ -3,11 +3,17 @@
 <ui:composition template="/layout.xhtml"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:mep="http://MicroEnterpriseProject/tags">
+
+    <f:metadata>
+        <f:event listener="#{app.setTitle('Liste des factures')}" type="preRenderView" />
+        <f:event listener="#{billListController.getAll()}" type="preRenderView" />
+    </f:metadata>
 
     <ui:define name="content">
         <p:panel header="Nouvelle facture">
-            <mep:billForm/>
+            <mep:billList/>
         </p:panel>
     </ui:define>
 </ui:composition>

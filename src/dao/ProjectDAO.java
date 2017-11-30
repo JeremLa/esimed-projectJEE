@@ -12,11 +12,7 @@ import java.util.List;
 public class ProjectDAO extends SimpleDAO<Project>{
 
     public List<Project> getAllByClient(Client client){
-        try{
-            return em.createQuery("SELECT p FROM Project p WHERE p.client = :client ORDER BY p.id DESC ").setParameter("client", client).getResultList();
-        }catch(NoResultException e){
-            return null;
-        }
+        return em.createQuery("SELECT p FROM Project p WHERE p.client = :client ORDER BY p.id DESC ").setParameter("client", client).getResultList();
     }
 
     public List<Project> getAllByUser(User user){

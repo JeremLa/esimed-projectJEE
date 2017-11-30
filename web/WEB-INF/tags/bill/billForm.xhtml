@@ -13,7 +13,8 @@
                 <h:outputText value="Numéro :"/>
                 <p:inputText value="#{billFormController.bill.billNumber}" label="Numéro" required="true" style="width:420px">
                     <f:validator validatorId="uniqueBillValidator" />
-                    <f:ajax event="blur" render="messages" />
+                    <f:attribute name="billId" value="#{billFormController.bill.id}"/>
+                    <f:ajax event="change" render="messages" />
                 </p:inputText>
 
                 <h:outputText value="Projet : " />
@@ -67,7 +68,7 @@
                 <p:commandButton action="#{billFormController.save()}" value="Créer" update="growl, billForm" rendered="#{billFormController.getEditMode() == false}"/>
                 <p:commandButton action="#{billFormController.update()}"
                                  value="Modifier" update="growl, @form"
-                                 rendered="#{projectFormController.getEditMode() == true}"
+                                 rendered="#{billFormController.getEditMode() == true}"
                                  oncomplete="PF('#{widgetName}).hide()"/>
             </h:panelGrid>
         </p:panel>

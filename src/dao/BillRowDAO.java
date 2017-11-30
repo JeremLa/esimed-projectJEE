@@ -4,14 +4,17 @@ import entity.Bill;
 import entity.BillRow;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.transaction.Transactional;
 import java.util.List;
 
 @ApplicationScoped
 public class BillRowDAO extends SimpleDAO<BillRow>{
-
-    @Transactional
     public List<BillRow> getByBill(Bill bill){
         return em.createQuery("SELECT br FROM BillRow br WHERE br.bill = :bill").setParameter("bill", bill).getResultList();
+    }
+
+    public double getBillSum(Bill bill){
+        List<BillRow> billRowls = getByBill(bill);
+
+        return billRowls.stream().mapToDouble(br->br.getUnitPrice() * br.getAmount()).sum();
     }
 }

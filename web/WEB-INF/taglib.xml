@@ -25,7 +25,11 @@
         </attribute>
     </tag>
     <tag>
-        <tag-name>factureForm</tag-name>
+        <tag-name>billForm</tag-name>
         <source>tags/bill/billForm.xhtml</source>
+    </tag>
+    <tag>
+        <tag-name>billList</tag-name>
+        <source>tags/bill/billList.xhtml</source>
     </tag>
 </facelet-taglib>

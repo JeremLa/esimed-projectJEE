@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:mep="http://MicroEnterpriseProject/tags">
+
+    <h:form id="billList">
+        <p:dataTable value="#{billListController.bills}" var="bill" widgetVar="billTable" emptyMessage="Aucune facture à afficher" id="billTable"
+                     rows="25"
+                     paginator="true"
+                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                     rowsPerPageTemplate="25, 50, 100">>
+
+            <p:column headerText="N°" >
+                <h:outputText value="#{bill.billNumber}"/>
+            </p:column>
+
+            <p:column headerText="Etat" >
+                <h:outputText value="#{bill.billStatus}"/>
+            </p:column>
+
+            <p:column headerText="Projet" rendered="#{billListController.fromProject == false}">
+                <h:outputText value="#{bill.project.name}"/>
+            </p:column>
+
+            <p:column headerText="Client" rendered="#{billListController.fromClient == false}">
+                <h:outputText value="#{bill.project.client.firstName} #{bill.project.client.lastName}"/>
+            </p:column>
+
+            <p:column headerText="Montant" >
+                <h:outputText value="#{billListController.getBillAmount(bill)}">
+                    <f:convertNumber pattern="#0.00 €" />
+                </h:outputText>
+            </p:column>
+
+            <p:column style="text-align: center">
+                <p:commandButton  icon="fa fa-eye" title="Détails"
+                                  action="#{billFormController.setBill(bill)}"
+                                  oncomplete="PF('updateBill').show()" update="@widgetVar(updateBill)" process="@this"/>
+
+                <p:commandButton update="@form"  icon="fa fa-times" title="Supprimer" actionListener="#{billFormController.delete(bill)}" rendered="#{billFormController.haveBillRow(bill) == false}">
+                    <p:confirm header="Confirmation" message="Supprimer la facture n°#{bill.billNumber} ?" icon="fa fa-exclamation" />
+                </p:commandButton>
+
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                    <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-times" style="color: red"/>
+                    <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no"/>
+                </p:confirmDialog>
+            </p:column>
+        </p:dataTable>
+    </h:form>
+    <p:dialog header="Editer le projet" widgetVar="updateBill" modal="true" id="modalForUpdateBill">
+        <mep:billForm widgetName="updateBill"/>
+    </p:dialog>
+</ui:composition>

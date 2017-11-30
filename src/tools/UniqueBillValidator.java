@@ -27,9 +27,16 @@ public class UniqueBillValidator implements Validator {
         }
 
         Integer number = (Integer) value;
+        Integer billId = (Integer) component.getAttributes().get("billId");
 
-        if (billDAO.existBillNumber(number)) {
+        if (billDAO.existBillNumber(number, billId)) {
             throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ce numéro de facture existe déjà.", null));
+        }
+
+        Integer lastSent = billDAO.isHigherLastSent(number);
+
+        if(lastSent != 0){
+            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Le numéro de facture doit être supérieur au numéro de la dernière facture envoyé ("+ lastSent +")", null));
         }
     }
 }
