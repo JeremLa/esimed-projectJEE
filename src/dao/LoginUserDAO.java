@@ -2,10 +2,9 @@ package dao;
 
 import entity.LoginUser;
 
-import javax.faces.bean.ApplicationScoped;
-import java.io.Serializable;
+import javax.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
-public class LoginUserDAO extends SimpleDAO<LoginUser> implements Serializable {
+public class LoginUserDAO extends SimpleDAO<LoginUser> {
 
 }

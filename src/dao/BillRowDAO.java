@@ -3,7 +3,7 @@ package dao;
 import entity.Bill;
 import entity.BillRow;
 
-import javax.faces.bean.ApplicationScoped;
+import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
 import java.util.List;
 

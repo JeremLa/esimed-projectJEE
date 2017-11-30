@@ -2,12 +2,11 @@ package dao;
 
 import entity.Group;
 
-import javax.faces.bean.ApplicationScoped;
+import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
-import java.io.Serializable;
 
 @ApplicationScoped
-public class GroupDAO extends SimpleDAO<Group> implements Serializable {
+public class GroupDAO extends SimpleDAO<Group> {
 
     public Group findOneByName(String name){
         return (Group) em.createQuery("SELECT g FROM Group g WHERE g.groupName = :name").setParameter("name", name).getSingleResult();

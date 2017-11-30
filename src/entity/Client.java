@@ -56,29 +56,6 @@ public class Client extends Person implements Serializable {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Client)) return false;
-        if (!super.equals(o)) return false;
-
-        Client client = (Client) o;
-
-        if (getEnterprise() != null ? !getEnterprise().equals(client.getEnterprise()) : client.getEnterprise() != null)
-            return false;
-        if (getMail() != null ? !getMail().equals(client.getMail()) : client.getMail() != null) return false;
-        return getContactName() != null ? getContactName().equals(client.getContactName()) : client.getContactName() == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (getEnterprise() != null ? getEnterprise().hashCode() : 0);
-        result = 31 * result + (getMail() != null ? getMail().hashCode() : 0);
-        result = 31 * result + (getContactName() != null ? getContactName().hashCode() : 0);
-        return result;
-    }
-
-    @Override
     public String toString() {
         return "Client{" +
                 "enterprise=" + enterprise +

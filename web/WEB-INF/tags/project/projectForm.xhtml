@@ -13,13 +13,13 @@
                 <h:outputText value="Status: " />
                 <p:selectOneMenu value="#{projectFormController.project.status}" required="true" label="Status" style="width: 250px">
                     <f:selectItem itemLabel="Choisir un état" itemValue="" />
-                    <f:selectItems value="#{projectController.status}"/>
+                    <f:selectItems value="#{projectFormController.status}"/>
                 </p:selectOneMenu>
 
                 <h:outputText value="Client: " />
                 <p:selectOneMenu value="#{projectFormController.project.client}" panelStyle="width:250px"
                                  effect="fade" style="width:250px" filter="true" filterMatchMode="contains" label="Client">
-                    <f:selectItems value="#{projectController.clients}" var="client" itemLabel="#{client.firstName} #{client.lastName}"/>
+                    <f:selectItems value="#{projectFormController.clients}" var="client" itemLabel="#{client.firstName} #{client.lastName}"/>
                 </p:selectOneMenu>
 
                 <h:outputText value="Nom: " />

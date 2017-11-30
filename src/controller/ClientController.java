@@ -103,7 +103,7 @@ public class ClientController implements Serializable{
         if("".equals(search) || search == null){
             initList();
         }else{
-            clients = clientDAO.searchClient(search);
+            clients = clientDAO.searchClient(user, search);
         }
     }
 

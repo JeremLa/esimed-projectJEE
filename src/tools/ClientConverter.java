@@ -18,16 +18,7 @@ public class ClientConverter implements Converter{
 
     @Override
     public Object getAsObject(FacesContext fc, UIComponent uic, String value) {
-        if(value != null && value.trim().length() > 0) {
-            try {
-                return clientDAO.get(Client.class, Integer.parseInt(value));
-            } catch(NumberFormatException e) {
-                throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Conversion Error", "Not a valid client."));
-            }
-        }
-        else {
-            return null;
-        }
+        return clientDAO.get(Client.class, Integer.parseInt(value));
     }
 
     @Override

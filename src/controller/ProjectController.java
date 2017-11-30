@@ -1,5 +1,6 @@
 package controller;
 
+import dao.BillDAO;
 import dao.ClientDAO;
 import dao.ProjectDAO;
 import dao.UserDAO;
@@ -27,11 +28,15 @@ public class ProjectController implements Serializable{
     private ClientDAO clientDAO;
     @Inject
     private UserDAO userDAO;
+    @Inject
+    private BillDAO billDAO;
+    @Inject
+    private User user;
 
     private Project project;
     private ProjectStatus[] status;
     private String defaultValue;
-    private List<Client> clients;
+//    private List<Client> clients;
     private List<Project> projects;
     private Boolean editMode;
 
@@ -40,9 +45,7 @@ public class ProjectController implements Serializable{
         project = new Project();
         status = ProjectStatus.values();
 
-        User currentUser = userDAO.findByUserName(FacesTools.currentUserName());
-        clients = clientDAO.getAllByUser(currentUser);
-
+//        clients = clientDAO.getAllByUser(user);
         projects = projectDAO.getAll(Project.class);
 
         defaultValue = ProjectStatus.STARTED.toString();
@@ -59,8 +62,7 @@ public class ProjectController implements Serializable{
     }
 
     public Boolean haveBill(Project project){
-        //TODO
-        return true;
+        return billDAO.getByProject(project).size() > 0;
     }
 
     public Project getProject() {
@@ -79,13 +81,13 @@ public class ProjectController implements Serializable{
         this.status = status;
     }
 
-    public List<Client> getClients() {
-        return clients;
-    }
-
-    public void setClients(List<Client> clients) {
-        this.clients = clients;
-    }
+//    public List<Client> getClients() {
+//        return clients;
+//    }
+//
+//    public void setClients(List<Client> clients) {
+//        this.clients = clients;
+//    }
 
     public Boolean getEditMode() {
         return editMode;

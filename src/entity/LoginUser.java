@@ -61,28 +61,6 @@ public class LoginUser extends BaseEntity implements Serializable{
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof LoginUser)) return false;
-
-        LoginUser loginUser = (LoginUser) o;
-
-        if (getUserName() != null ? !getUserName().equals(loginUser.getUserName()) : loginUser.getUserName() != null)
-            return false;
-        if (getPassword() != null ? !getPassword().equals(loginUser.getPassword()) : loginUser.getPassword() != null)
-            return false;
-        return getGroups() != null ? getGroups().equals(loginUser.getGroups()) : loginUser.getGroups() == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = getUserName() != null ? getUserName().hashCode() : 0;
-        result = 31 * result + (getPassword() != null ? getPassword().hashCode() : 0);
-        result = 31 * result + (getGroups() != null ? getGroups().hashCode() : 0);
-        return result;
-    }
-
-    @Override
     public String toString() {
         return "LoginUser{" +
                 "userName='" + userName + '\'' +

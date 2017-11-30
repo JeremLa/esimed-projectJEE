@@ -2,12 +2,11 @@ package dao;
 
 import entity.User;
 
-import javax.faces.bean.ApplicationScoped;
+import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.NoResultException;
-import java.io.Serializable;
 
 @ApplicationScoped
-public class UserDAO extends SimpleDAO<User> implements Serializable{
+public class UserDAO extends SimpleDAO<User>{
 
     public User findByUserName(String mail){
         try{
@@ -20,5 +19,4 @@ public class UserDAO extends SimpleDAO<User> implements Serializable{
     public Boolean existEmail(String mail){
         return this.findByUserName(mail) != null;
     }
-
 }

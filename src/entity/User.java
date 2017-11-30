@@ -1,5 +1,6 @@
 package entity;
 
+import javax.enterprise.inject.Alternative;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -7,6 +8,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "mep_user")
+@Alternative
 public class User extends Person implements Serializable{
     private Date birthDate;
     private Double CAMax;

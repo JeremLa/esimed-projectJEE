@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.Principal;
 import java.text.Normalizer;
 
 @Named
@@ -69,6 +70,13 @@ public class FacesTools {
 
     @Named
     public static String currentUserName(){
+        if(!hasUserPrincipal()){
+            return null;
+        }
         return getRequest().getUserPrincipal().getName();
+    }
+
+    public static boolean hasUserPrincipal(){
+        return getRequest().getUserPrincipal() != null;
     }
 }

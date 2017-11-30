@@ -10,7 +10,6 @@ import tools.FacesTools;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Alternative;
-import javax.enterprise.inject.Default;
 import javax.enterprise.inject.Produces;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -36,7 +35,6 @@ public class LoggedUserController implements Serializable{
     @PostConstruct
     public void init(){
         mailChanged = false;
-        user = userDAO.findByUserName(FacesTools.currentUserName());
     }
 
     public void saveConnexionInfo(){
@@ -105,8 +103,12 @@ public class LoggedUserController implements Serializable{
         FacesTools.addMessage(FacesMessage.SEVERITY_INFO, "Vos informations ont été sauvegardé avec succès.");
     }
 
-    @Produces @Alternative
+    @Produces
     public User getUser() {
+        if(user == null && FacesTools.hasUserPrincipal()){
+            user = userDAO.findByUserName(FacesTools.currentUserName());
+        }
+
         return user;
     }
 
