@@ -5,18 +5,15 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public enum  ProjectStatus {
-    PROSPECT("prospect"),
-    DEVIS("devis"),
-    SEND("envoyé"),
-    ACCEPTED("devis accepté"),
-    STARTED("démarré"),
-    FINISHED("terminé"),
-    CANCELED("annulé");
+public enum PaymentMethods {
+    CHECK("chèque"),
+    TRANSFER("virement"),
+    PAYPAL("paypal"),
+    OTHER("autre");
 
     private String status = "";
 
-    ProjectStatus (String status){
+    PaymentMethods(String status){
         this.status = status;
     }
 
@@ -24,11 +21,11 @@ public enum  ProjectStatus {
         return status;
     }
 
-    private static final List<ProjectStatus> VALUES = Collections.unmodifiableList(Arrays.asList(values()));
+    private static final List<PaymentMethods> VALUES = Collections.unmodifiableList(Arrays.asList(values()));
     private static final int SIZE = VALUES.size();
     private static final Random RANDOM = new Random();
 
-    public static ProjectStatus randomStatus()  {
+    public static PaymentMethods randomStatus()  {
         return VALUES.get(RANDOM.nextInt(SIZE));
     }
 }

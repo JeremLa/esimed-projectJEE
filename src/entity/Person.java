@@ -71,35 +71,6 @@ public class Person extends BaseEntity {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Person)) return false;
-
-        Person person = (Person) o;
-
-        if (getFirstName() != null ? !getFirstName().equals(person.getFirstName()) : person.getFirstName() != null)
-            return false;
-        if (getLastName() != null ? !getLastName().equals(person.getLastName()) : person.getLastName() != null)
-            return false;
-        if (getAdress() != null ? !getAdress().equals(person.getAdress()) : person.getAdress() != null) return false;
-        if (getZipcode() != null ? !getZipcode().equals(person.getZipcode()) : person.getZipcode() != null)
-            return false;
-        if (getCity() != null ? !getCity().equals(person.getCity()) : person.getCity() != null) return false;
-        return getPhone() != null ? getPhone().equals(person.getPhone()) : person.getPhone() == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = getFirstName() != null ? getFirstName().hashCode() : 0;
-        result = 31 * result + (getLastName() != null ? getLastName().hashCode() : 0);
-        result = 31 * result + (getAdress() != null ? getAdress().hashCode() : 0);
-        result = 31 * result + (getZipcode() != null ? getZipcode().hashCode() : 0);
-        result = 31 * result + (getCity() != null ? getCity().hashCode() : 0);
-        result = 31 * result + (getPhone() != null ? getPhone().hashCode() : 0);
-        return result;
-    }
-
-    @Override
     public String toString() {
         return "Person{" +
                 "firstName='" + firstName + '\'' +

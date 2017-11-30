@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(name = "mep_project")
@@ -42,5 +43,15 @@ public class Project extends BaseEntity implements Serializable{
 
     public void setClient(Client client) {
         this.client = client;
+    }
+
+    @Override
+    public String toString() {
+        return "Project{" +
+                "status=" + status +
+                ", name='" + name + '\'' +
+                ", client=" + client +
+                ", id=" + id +
+                "} " + super.toString();
     }
 }

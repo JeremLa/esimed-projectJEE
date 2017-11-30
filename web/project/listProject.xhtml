@@ -9,4 +9,11 @@
     <f:metadata>
         <f:event listener="#{app.setTitle('Liste projets')}" type="preRenderView" />
     </f:metadata>
+
+    <ui:define name="content">
+        <p:panel header="Tous les projets">
+            <mep:projectList projects="#{projectController.projects}"/>
+        </p:panel>
+    </ui:define>
+
 </ui:composition>

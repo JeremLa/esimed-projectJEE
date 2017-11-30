@@ -7,6 +7,7 @@ import entity.Client;
 import entity.Project;
 import entity.User;
 import entity.enumerable.ProjectStatus;
+import org.primefaces.context.RequestContext;
 import tools.FacesTools;
 
 import javax.annotation.PostConstruct;
@@ -26,9 +27,12 @@ public class ProjectController implements Serializable{
     private ClientDao clientDao;
     @Inject
     private UserDAO userDAO;
+
     private Project project;
     private ProjectStatus[] status;
+    private String defaultValue;
     private List<Client> clients;
+    private List<Project> projects;
     private Boolean editMode;
 
     @PostConstruct
@@ -38,17 +42,57 @@ public class ProjectController implements Serializable{
 
         User currentUser = userDAO.findByUserName(FacesTools.currentUserName());
         clients = clientDao.getAllByUser(currentUser);
+
+        projects = projectDao.getAll(Project.class);
+
+        defaultValue = ProjectStatus.STARTED.toString();
+
+        RequestContext.getCurrentInstance().execute("PF('projectTable').filter()");
     }
 
-    public void createProject(){
-        projectDao.insert(project);
+//    public void createProject(){
+//        projectDao.insert(project);
+//
+//        this.project = new Project();
+//
+//        FacesTools.addFlashMessage(FacesMessage.SEVERITY_INFO, "Projet créé avec succès.");
+//    }
+//
+//    public void updateProject(){
+//
+//        System.out.println("///////////////////////////////////////////// THIS.PROJECT :" + this.project);
+//
+//       try{
+//           projectDao.update(project);
+//
+//           FacesTools.addFlashMessage(FacesMessage.SEVERITY_INFO, "Le projet a bien été mis à jour.");
+//
+//           RequestContext.getCurrentInstance().execute("PF('modalForUpdateProject').hide()");
+//       }catch(Exception e){
+//            e.printStackTrace();
+//       }
+//    }
 
-        FacesTools.addFlashMessage(FacesMessage.SEVERITY_INFO, "Projet créé avec succès.");
+    public void removeProject(Project project){
+        projectDao.delete(project);
+
+        this.project = new Project();
+
+        FacesTools.addMessage(FacesMessage.SEVERITY_INFO, "Le projet a bien été supprimé.");
     }
 
-    public void updateProject(){
-        projectDao.update(project);
+    public Boolean haveBill(Project project){
+        //TODO
+        return true;
     }
+
+//    public void setProjectForModal(Project project){
+//
+//        System.out.println("///////////////////////////////////////// set project for modal ///////////////////////////////////////");
+//
+//        this.project = project;
+//        this.editMode = true;
+//    }
 
     public Project getProject() {
         return project;
@@ -80,5 +124,21 @@ public class ProjectController implements Serializable{
 
     public void setEditMode(Boolean editMode) {
         this.editMode = editMode;
+    }
+
+    public List<Project> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(List<Project> projects) {
+        this.projects = projects;
+    }
+
+    public String getDefaultValue() {
+        return defaultValue;
+    }
+
+    public void setDefaultValue(String defaultValue) {
+        this.defaultValue = defaultValue;
     }
 }

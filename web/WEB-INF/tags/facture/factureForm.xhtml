@@ -5,25 +5,12 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <h:form id="projectForm">
+    <h:form id="factureForm">
         <p:panel>
             <p:messages id="messages" showDetail="false" autoUpdate="true"/>
             <h:panelGrid columns="2" columnClasses="label, value">
 
-                <h:outputText value="Status: " />
-                <p:selectOneMenu value="#{projectFormController.project.status}" required="true" label="Status" style="width: 250px">
-                    <f:selectItem itemLabel="Choisir un état" itemValue="" />
-                    <f:selectItems value="#{projectController.status}"/>
-                </p:selectOneMenu>
 
-                <h:outputText value="Client: " />
-                <p:selectOneMenu value="#{projectFormController.project.client}" panelStyle="width:250px"
-                                 effect="fade" style="width:250px" filter="true" filterMatchMode="contains" label="Client">
-                    <f:selectItems value="#{projectController.clients}" var="client" itemLabel="#{client.firstName} #{client.lastName}"/>
-                </p:selectOneMenu>
-
-                <h:outputText value="Nom: " />
-                <p:inputText value="#{projectFormController.project.name}" required="true" label="Nom" style="width: 250px"/>
 
                 <p:commandButton action="#{projectFormController.save()}" value="Créer" update="growl" rendered="#{projectFormController.getEditMode() == false}"/>
                 <p:commandButton action="#{projectFormController.update()}"

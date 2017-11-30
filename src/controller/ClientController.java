@@ -4,6 +4,7 @@ import dao.ClientDao;
 import dao.ProjectDao;
 import dao.UserDAO;
 import entity.Client;
+import entity.Project;
 import entity.User;
 import org.primefaces.context.RequestContext;
 import tools.FacesTools;
@@ -71,11 +72,11 @@ public class ClientController implements Serializable{
     public void updateClient(){
         clientDao.update(client);
 
-        FacesTools.addFlashMessage(FacesMessage.SEVERITY_INFO, "Les modifications ont été enregistré.");
+        FacesTools.addMessage(FacesMessage.SEVERITY_INFO, "Les modifications ont été enregistré.");
     }
 
     public void displayClient(Client client){
-        FacesTools.redirect("/client/display.xhtml?id="+client.getId());
+        FacesTools.redirect("/client/displayClient.xhtml?id="+client.getId());
     }
 
     public void initAskedClient(Integer id){
@@ -88,11 +89,15 @@ public class ClientController implements Serializable{
 
             if(client == null){
                 FacesTools.redirect("/client/listClient.xhtml");
-                FacesTools.addFlashMessage(FacesMessage.SEVERITY_INFO, "L'utilisateur demandé n'existe pas.");
+                FacesTools.addMessage(FacesMessage.SEVERITY_INFO, "L'utilisateur demandé n'existe pas.");
 
                 RequestContext.getCurrentInstance().update("growl");
             }
         }
+    }
+
+    public List<Project> getClientProjects(){
+        return projectDao.getAllByClient(client);
     }
 
     public void searchAction(){

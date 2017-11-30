@@ -47,7 +47,7 @@ public class UserController implements Serializable{
         RequestContext context = RequestContext.getCurrentInstance();
         context.execute("PF('inscription').hide();");
 
-        FacesTools.addFlashMessage(FacesMessage.SEVERITY_INFO, "Le compte a été créé avec succès, vous pouvez vous connecter.");
+        FacesTools.addMessage(FacesMessage.SEVERITY_INFO, "Le compte a été créé avec succès, vous pouvez vous connecter.");
     }
 
     public Boolean mailExist(String mail){
@@ -61,7 +61,7 @@ public class UserController implements Serializable{
     public void saveConnexionInfo(){
         if(!FacesTools.currentUserName().equals(connectedUser.getLoginUser().getUserName())){
             if(userDAO.existEmail(connectedUser.getLoginUser().getUserName())){
-                FacesTools.addFlashMessage(FacesMessage.SEVERITY_ERROR, "Ce mail est déjà utilisé.");
+                FacesTools.addMessage(FacesMessage.SEVERITY_ERROR, "Ce mail est déjà utilisé.");
                 return;
             }
             loginUser.setUserName(connectedUser.getLoginUser().getUserName());
@@ -76,7 +76,7 @@ public class UserController implements Serializable{
                     connectedUser.getLoginUser().setPassword(FacesTools.digestSHA256Hex(password1));
                 }
             } else {
-                FacesTools.addFlashMessage(FacesMessage.SEVERITY_ERROR, "Les mots de passe doivent être identique.");
+                FacesTools.addMessage(FacesMessage.SEVERITY_ERROR, "Les mots de passe doivent être identique.");
                 return;
             }
         }else{
@@ -90,12 +90,12 @@ public class UserController implements Serializable{
 
     public void saveBusinessInfo(){
         if(connectedUser.getCAMax() == null || connectedUser.getTaxes() == null){
-            FacesTools.addFlashMessage(FacesMessage.SEVERITY_ERROR, "Ces champs n'ont pas été renseigné correctement.");
+            FacesTools.addMessage(FacesMessage.SEVERITY_ERROR, "Ces champs n'ont pas été renseigné correctement.");
             return;
         }
 
         if(connectedUser.getCAMax() == 0 || connectedUser.getTaxes() == 0){
-            FacesTools.addFlashMessage(FacesMessage.SEVERITY_INFO, "Pour que votre tableau de bord soit précis, ces valeurs ne devraient pas être égal à zéro.");
+            FacesTools.addMessage(FacesMessage.SEVERITY_INFO, "Pour que votre tableau de bord soit précis, ces valeurs ne devraient pas être égal à zéro.");
         }
 
         saveUserConnectedChange();
@@ -126,7 +126,7 @@ public class UserController implements Serializable{
         loginUserDao.update(connectedUser.getLoginUser());
         userDAO.update(connectedUser);
 
-        FacesTools.addFlashMessage(FacesMessage.SEVERITY_INFO, "Vos informations ont été sauvegardé avec succès.");
+        FacesTools.addMessage(FacesMessage.SEVERITY_INFO, "Vos informations ont été sauvegardé avec succès.");
     }
 
     /*****************************************************************************************

@@ -63,6 +63,10 @@ public class FacesTools {
         facesContext.addMessage(null, new FacesMessage(severity, String.format(msg, args), ""));
     }
 
+    public static void addMessage(FacesMessage.Severity severity, String msg, Object... args) {
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, String.format(msg, args), ""));
+    }
+
     @Named
     public static String currentUserName(){
         return getRequest().getUserPrincipal().getName();

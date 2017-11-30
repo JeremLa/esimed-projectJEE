@@ -17,13 +17,13 @@
             <p:tabView orientation="left">
                 <p:tab title="Information personnel">
                     <p:panel>
-                        <mep:createClientForm/>
+                        <mep:createClientForm />
                     </p:panel>
                 </p:tab>
                 <p:tab title="Pojets">
-                    <h:panelGrid columns="2" cellpadding="10">
-                        <h:outputText value="bientôt" />
-                    </h:panelGrid>
+                    <p:panel>
+                        <mep:projectList projects="#{clientController.getClientProjects()}"/>
+                    </p:panel>
                 </p:tab>
                 <p:tab title="Factures">
                     <h:panelGrid columns="2" cellpadding="10">

@@ -37,6 +37,6 @@ public abstract class SimpleDAO<T extends BaseEntity>{
     }
 
     public List<T> getAll (Class<T> tClass){
-        return em.createQuery("Select t From "+tClass.getName()+" t" ).getResultList();
+        return em.createQuery("Select t From "+tClass.getName()+" t ORDER BY t DESC" ).getResultList();
     }
 }

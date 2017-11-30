@@ -11,5 +11,21 @@
     <tag>
         <tag-name>projectForm</tag-name>
         <source>tags/project/projectForm.xhtml</source>
+        <attribute>
+            <name>widgetName</name>
+            <require>false</require>
+        </attribute>
+    </tag>
+    <tag>
+        <tag-name>projectList</tag-name>
+        <source>tags/project/projectList.xhtml</source>
+        <attribute>
+            <name>projects</name>
+            <require>true</require>
+        </attribute>
+    </tag>
+    <tag>
+        <tag-name>factureForm</tag-name>
+        <source>tags/facture/factureForm.xhtml</source>
     </tag>
 </facelet-taglib>

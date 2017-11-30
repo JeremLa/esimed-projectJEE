@@ -6,47 +6,45 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:form style="max-width: 420px" id="clientForm">
-        <p:panel>
-            <p:messages id="messages" showDetail="true" autoUpdate="true"/>
-            <h:panelGrid columns="2" columnClasses="label, value">
+        <p:messages id="messages" showDetail="true" autoUpdate="true"/>
+        <h:panelGrid columns="2" columnClasses="label, value">
 
-                <h:outputText value="Type: " />
-                <p:selectBooleanButton value="#{clientController.client.enterprise}" required="true" onLabel="Entreprise" offLabel="Particulier" onIcon="fa fa-building" offIcon="fa fa-user">
-                    <p:ajax update="clientForm"/>
-                </p:selectBooleanButton>
+            <h:outputText value="Type: " />
+            <p:selectBooleanButton value="#{clientController.client.enterprise}" required="true" onLabel="Entreprise" offLabel="Particulier" onIcon="fa fa-building" offIcon="fa fa-user">
+                <p:ajax update="clientForm"/>
+            </p:selectBooleanButton>
 
-                <h:outputText value="Prénom :" rendered="#{clientController.client.enterprise == false}"/>
-                <p:inputText value="#{clientController.client.firstName}" label="Prénom" rendered="#{clientController.client.enterprise == false}"/>
+            <h:outputText value="Prénom :" rendered="#{clientController.client.enterprise == false}"/>
+            <p:inputText value="#{clientController.client.firstName}" label="Prénom" rendered="#{clientController.client.enterprise == false}"/>
 
-                <h:outputText value="Nom :*" />
-                <p:inputText value="#{clientController.client.lastName}" required="true" label="Nom"/>
+            <h:outputText value="Nom :*" />
+            <p:inputText value="#{clientController.client.lastName}" required="true" label="Nom"/>
 
-                <h:outputText value="Nom du contact :" id="contactLabel" rendered="#{clientController.client.enterprise}"/>
-                <p:inputText value="#{clientController.client.contactName}" label="Contact" rendered="#{clientController.client.enterprise}"/>
+            <h:outputText value="Nom du contact :" id="contactLabel" rendered="#{clientController.client.enterprise}"/>
+            <p:inputText value="#{clientController.client.contactName}" label="Contact" rendered="#{clientController.client.enterprise}"/>
 
-                <h:outputText value="E-mail :" />
-                <p:inputText value="#{clientController.client.mail}" required="true" label="E-mail" validatorMessage="Email au format non valide">
-                    <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
-                </p:inputText>
+            <h:outputText value="E-mail :" />
+            <p:inputText value="#{clientController.client.mail}" required="true" label="E-mail" validatorMessage="Email au format non valide">
+                <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
+            </p:inputText>
 
-                <h:outputText value="Téléphone :" />
-                <p:inputMask id="phone" value="#{clientController.client.phone}" mask="09-99-99-99-99"/>
+            <h:outputText value="Téléphone :" />
+            <p:inputMask id="phone" value="#{clientController.client.phone}" mask="09-99-99-99-99"/>
 
-                <h:outputText value="Adresse :" />
-                <p:inputTextarea rows="2" cols="22" value="#{clientController.client.adress}"/>
+            <h:outputText value="Adresse :" />
+            <p:inputTextarea rows="2" cols="22" value="#{clientController.client.adress}"/>
 
-                <h:outputText value="Code postal :" />
-                <p:inputMask value="#{clientController.client.zipcode}" mask="99999"/>
+            <h:outputText value="Code postal :" />
+            <p:inputMask value="#{clientController.client.zipcode}" mask="99999"/>
 
-                <h:outputText value="Ville :" />
-                <p:inputText value="#{clientController.client.city}"/>
+            <h:outputText value="Ville :" />
+            <p:inputText value="#{clientController.client.city}"/>
 
-                <p:spacer height="15" />
-                <p:spacer height="15" />
+            <p:spacer height="15" />
+            <p:spacer height="15" />
 
-                <p:commandButton actionListener="#{clientController.insertClient()}" value="Créer" update="growl" rendered="#{clientController.getEditMode() == false}"/>
-                <p:commandButton actionListener="#{clientController.updateClient()}" value="Modifier" update="growl" rendered="#{clientController.getEditMode() == true}"/>
-            </h:panelGrid>
-        </p:panel>
+            <p:commandButton actionListener="#{clientController.insertClient()}" value="Créer" update="growl" rendered="#{clientController.getEditMode() == false}"/>
+            <p:commandButton actionListener="#{clientController.updateClient()}" value="Modifier" update="growl" rendered="#{clientController.getEditMode() == true}"/>
+        </h:panelGrid>
     </h:form>
 </ui:composition>

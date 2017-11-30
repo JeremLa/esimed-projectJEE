@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:mep="http://MicroEnterpriseProject/tags">
+
+    <h:form id="projectList">
+        <p:dataTable value="#{projects}" var="project" widgetVar="projectTable" emptyMessage="Aucune projet à afficher" id="projectTable">
+
+            <p:column headerText="Nom" >
+                <h:outputText value="#{project.name}"/>
+            </p:column>
+
+            <p:column headerText="Pour" >
+                <h:outputText value="#{project.client.firstName} #{project.client.lastName}"/>
+            </p:column>
+
+            <p:column headerText="Status" filterBy="#{project.status}">
+                <f:facet name="filter">
+                    <p:selectOneMenu onchange="PF('projectTable').filter()" label="Filtre status" value="#{projectController.defaultValue}">
+                        <f:selectItem itemLabel="Tous" itemValue="" />
+                        <f:selectItems value="#{projectController.status}" var="statu" itemValue="#{statu.toString()}"/>
+                    </p:selectOneMenu>
+                </f:facet>
+                <h:outputText value="#{project.status.toString()}"/>
+            </p:column>
+
+            <p:column style="text-align: center">
+                <p:commandButton  icon="fa fa-eye" title="Détails"
+                                  action="#{projectFormController.setProject(project)}"
+                                  oncomplete="PF('updateProject').show()" update="@widgetVar(updateProject)" process="@this"/>
+
+                <p:commandButton update="@form"  icon="fa fa-times" title="Supprimer" actionListener="#{projectController.removeProject(project)}" rendered="#{projectController.haveBill(project) == false}">
+                    <p:confirm header="Confirmation" message="Supprimer le projet #{project.name} ?" icon="fa fa-exclamation" />
+                </p:commandButton>
+
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                    <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-times" style="color: red"/>
+                    <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no"/>
+                </p:confirmDialog>
+            </p:column>
+        </p:dataTable>
+    </h:form>
+    <p:dialog header="Editer le projet" widgetVar="updateProject" modal="true" id="modalForUpdateProject">
+        <mep:projectForm widgetName="updateProject"/>
+    </p:dialog>
+</ui:composition>
