@@ -8,6 +8,8 @@ import entity.enumerable.BillStatus;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @ApplicationScoped
@@ -50,5 +52,25 @@ public class BillDAO extends SimpleDAO<Bill>{
         }
 
         return 0;
+    }
+
+    public Double getCurrentYearCA(User user, Integer year){
+
+        Calendar dStart = Calendar.getInstance();
+        Calendar dEnd = Calendar.getInstance();
+
+        dStart.set(year, 1, 1);
+        dEnd.set(year, 12, 31);
+
+        return (Double) em.createQuery("SELECT SUM (br.amount * br.unitPrice) FROM BillRow br " +
+                "WHERE br.bill.project.client.user = :user " +
+                "AND br.bill.billStatus = :paid " +
+                "AND br.bill.paidDate > :dateStart " +
+                "AND br.bill.paidDate < :dateEnd")
+                .setParameter("user", user)
+                .setParameter("paid", BillStatus.PAID)
+                .setParameter("dateStart", dStart.getTime())
+                .setParameter("dateEnd", dEnd.getTime())
+                .getSingleResult();
     }
 }

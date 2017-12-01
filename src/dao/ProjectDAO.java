@@ -22,5 +22,4 @@ public class ProjectDAO extends SimpleDAO<Project>{
     public Boolean clientHasProject(Client client){
         return this.getAllByClient(client).size() > 0;
     }
-
 }

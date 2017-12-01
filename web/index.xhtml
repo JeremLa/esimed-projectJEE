@@ -10,9 +10,11 @@
     </f:metadata>
 
     <ui:define name="content">
-        <p:panel>
-            Bienvenu
-        </p:panel>
+        <h:panelGrid columns="2">
+            <p:chart type="donut" model="#{donutChartController.donutChartProject}" style="width:400px;height:300px" />
+
+            <p:chart type="metergauge" model="#{gaugeChartController.meterGaugeModel1}" style="width:400px;height:250px" />
+        </h:panelGrid>
     </ui:define>
 
 </ui:composition>
