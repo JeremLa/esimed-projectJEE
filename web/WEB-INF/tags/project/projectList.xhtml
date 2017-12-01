@@ -32,6 +32,12 @@
                                   action="#{projectFormController.setProject(project)}"
                                   oncomplete="PF('updateProject').show()" update="@widgetVar(updateProject)" process="@this"/>
 
+                <p:commandButton  icon="fa fa-euro" title="Détails"
+                                  action="#{billListController.getByProject(project)}"
+                                  oncomplete="PF('listBill').show()" update="@widgetVar(listBill)" process="@this"
+                                    rendered="#{projectController.haveBill(project) == true}">
+                </p:commandButton>
+
                 <p:commandButton update="@form"  icon="fa fa-times" title="Supprimer" actionListener="#{projectController.removeProject(project)}" rendered="#{projectController.haveBill(project) == false}">
                     <p:confirm header="Confirmation" message="Supprimer le projet #{project.name} ?" icon="fa fa-exclamation" />
                 </p:commandButton>
@@ -43,7 +49,11 @@
             </p:column>
         </p:dataTable>
     </h:form>
-    <p:dialog header="Editer le projet" widgetVar="updateProject" modal="true" id="modalForUpdateProject">
+    <p:dialog header="Editer le projet" widgetVar="updateProject" modal="true">
         <mep:projectForm widgetName="updateProject"/>
+    </p:dialog>
+
+    <p:dialog header="Liste factures" widgetVar="listBill" modal="true">
+        <mep:billList/>
     </p:dialog>
 </ui:composition>

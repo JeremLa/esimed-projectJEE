@@ -32,4 +32,8 @@
         <tag-name>billList</tag-name>
         <source>tags/bill/billList.xhtml</source>
     </tag>
+    <tag>
+        <tag-name>billRowList</tag-name>
+        <source>tags/billRow/billRowList.xhtml</source>
+    </tag>
 </facelet-taglib>

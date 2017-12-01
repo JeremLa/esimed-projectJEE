@@ -39,10 +39,16 @@ public class BillDAO extends SimpleDAO<Bill>{
     }
 
     public Integer isHigherLastSent(Integer number){
-        List<Bill> resultat = em.createQuery("SELECT b FROM Bill b WHERE b.billStatus = :send AND b.billNumber > :number")
+        List<Bill> resultat = em.createQuery("SELECT b FROM Bill b WHERE (b.billStatus = :send OR b.billStatus = :paid) AND b.billNumber > :number")
                 .setParameter("number", number)
-                .setParameter("send", BillStatus.SENT).getResultList();
-        resultat.sort((a,b)->b.getBillNumber()-a.getBillNumber());
-        return resultat.get(0).getBillNumber();
+                .setParameter("send", BillStatus.SENT)
+                .setParameter("paid", BillStatus.PAID)
+                .getResultList();
+        if(resultat.size() > 0){
+            resultat.sort((a,b)->b.getBillNumber()-a.getBillNumber());
+            return resultat.get(0).getBillNumber();
+        }
+
+        return 0;
     }
 }

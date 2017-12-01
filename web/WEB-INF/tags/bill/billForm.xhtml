@@ -7,11 +7,10 @@
 
     <h:form id="billForm">
         <p:panel>
-            <p:messages id="messages" showDetail="false" autoUpdate="true"/>
             <h:panelGrid columns="2" columnClasses="label, value">
 
                 <h:outputText value="Numéro :"/>
-                <p:inputText value="#{billFormController.bill.billNumber}" label="Numéro" required="true" style="width:420px">
+                <p:inputText value="#{billFormController.bill.billNumber}" label="Numéro" required="true" style="width:420px" disabled="#{billFormController.isPaid() == true}">
                     <f:validator validatorId="uniqueBillValidator" />
                     <f:attribute name="billId" value="#{billFormController.bill.id}"/>
                     <f:ajax event="change" render="messages" />
@@ -19,39 +18,49 @@
 
                 <h:outputText value="Projet : " />
                 <p:selectOneMenu value="#{billFormController.bill.project}" panelStyle="width:420px" required="true"
-                                 effect="fade" style="width:420px" filter="true" filterMatchMode="contains" label="Projet">
+                                 effect="fade" style="width:420px" filter="true" filterMatchMode="contains" label="Projet"
+                                 disabled="#{billFormController.isPaid() == true}">
                     <f:selectItem itemLabel="Choisir..."/>
                     <f:selectItems value="#{billFormController.projects}" var="project" itemLabel="#{project.name}"/>
                 </p:selectOneMenu>
 
                 <h:outputText value="Status : " />
-                <p:selectOneMenu value="#{billFormController.bill.billStatus}" panelStyle="width:420px" required="true"
-                                 effect="fade" style="width:420px" label="Status">
+                <p:selectOneMenu value="#{billFormController.bill.billStatus}" panelStyle="width:420px" required="true" id="selectStatus"
+                                 effect="fade" style="width:420px" label="Status" disabled="#{billFormController.isPaid() == true}" >
                     <f:selectItem itemLabel="Choisir..."/>
                     <f:selectItems value="#{billFormController.billStatuses}" var="status" itemLabel="#{status.toString()}"/>
+                    <p:ajax  listener="#{billFormController.StatusChange()}" update="billForm"/>
                 </p:selectOneMenu>
+
+                <p:spacer id="paidInfoSpacer" rendered="#{billFormController.renderAlert}"/>
+                <p:panel id="paidInfo" rendered="#{billFormController.renderAlert}">
+                    <i class="fa fa-exclamation-triangle"></i> une fois payé, la facture ne peu plus être édité.
+                </p:panel>
 
                 <p:spacer height="25" />
                 <p:spacer height="25" />
 
                 <h:outputText value="Echeance :" />
-                <p:calendar value="#{billFormController.bill.paidLimiteDate}" mindate="now" style="width:350px" mask="99/99/9999" required="true">
+                <p:calendar value="#{billFormController.bill.paidLimiteDate}" mindate="now" style="width:350px" mask="99/99/9999" required="true"
+                            disabled="#{billFormController.isPaid() == true}" label="Echeance">
                     <f:convertDateTime pattern="dd/MM/yyyy" />
                 </p:calendar>
 
                 <h:outputText value="Edité le :" />
-                <p:calendar value="#{billFormController.bill.editedDate}" style="width:250px" mask="99/99/9999" required="true">
+                <p:calendar value="#{billFormController.bill.editedDate}" style="width:250px" mask="99/99/9999" required="true"
+                            disabled="#{billFormController.isPaid() == true}" label="Edité le">
                     <f:convertDateTime pattern="dd/MM/yyyy" />
                 </p:calendar>
 
                 <h:outputText value="Payé le :" />
-                <p:calendar value="#{billFormController.bill.paidDate}" style="width:250px" mask="99/99/9999" required="true">
+                <p:calendar value="#{billFormController.bill.paidDate}" style="width:250px" mask="99/99/9999" required="#{billFormController.renderAlert == true}"
+                            disabled="#{billFormController.isPaid() == true}" label="Payé le">
                     <f:convertDateTime pattern="dd/MM/yyyy" />
                 </p:calendar>
 
                 <h:outputText value="Mode de paiement : " />
                 <p:selectOneMenu value="#{billFormController.bill.paymentMethods}" panelStyle="width:420px" required="true"
-                                 effect="fade" style="width:420px" label="Status">
+                                 effect="fade" style="width:420px" label="Status" disabled="#{billFormController.isPaid() == true}">
                     <f:selectItem itemLabel="Choisir..."/>
                     <f:selectItems value="#{billFormController.paymentMethods}" var="method" itemLabel="#{method.toString()}"/>
                 </p:selectOneMenu>
@@ -60,15 +69,16 @@
                 <p:spacer height="25" />
 
                 <h:outputText value="Note : " />
-                <p:inputTextarea rows="10" cols="50" value="#{billFormController.bill.note}"/>
+                <p:inputTextarea rows="10" cols="50" value="#{billFormController.bill.note}" disabled="#{billFormController.isPaid() == true}"/>
 
                 <p:spacer height="25" />
                 <p:spacer height="25" />
 
-                <p:commandButton action="#{billFormController.save()}" value="Créer" update="growl, billForm" rendered="#{billFormController.getEditMode() == false}"/>
+                <p:commandButton action="#{billFormController.save()}" value="Créer" update="growl, billForm"
+                                 rendered="#{(billFormController.getEditMode() == false) and (billFormController.isPaid() == false)}"/>
                 <p:commandButton action="#{billFormController.update()}"
                                  value="Modifier" update="growl, @form"
-                                 rendered="#{billFormController.getEditMode() == true}"
+                                 rendered="#{(billFormController.getEditMode() == true) and (billFormController.isPaid() == false)}"
                                  oncomplete="PF('#{widgetName}).hide()"/>
             </h:panelGrid>
         </p:panel>

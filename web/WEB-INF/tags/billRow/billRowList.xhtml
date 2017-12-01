@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:form id="billRowList">
+        <p:remoteCommand name="onRowEdit" process="billRowTable" update="billRowTable" />
+        <p:dataTable id="billRowTable" var="billRow" value="#{billRowFormController.billRows}" editable="#{billFormController.isPaid() == false}" style="margin-bottom:20px">
+
+            <p:ajax event="rowEdit" listener="#{billRowFormController.onRowEdit}" oncomplete="onRowEdit()" />
+            <p:ajax event="rowEditCancel" listener="#{billRowFormController.onRowCancel}" update="billRowTable" />
+
+            <p:column headerText="Label">
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{billRow.label}" /></f:facet>
+                    <f:facet name="input"><p:inputText id="modelInput" value="#{billRow.label}" label="Label" style="width:100%"/></f:facet>
+                </p:cellEditor>
+            </p:column>
+
+            <p:column headerText="Quantité">
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{billRow.amount}" /></f:facet>
+                    <f:facet name="input"><p:inputNumber value="#{billRow.amount}" style="width:100%" label="Quantité" decimalPlaces="0"/></f:facet>
+                </p:cellEditor>
+            </p:column>
+
+            <p:column headerText="Prix unitaire">
+                <p:cellEditor>
+                    <f:facet name="output">
+                        <h:outputText value="#{billRow.unitPrice}">
+                            <f:convertNumber pattern="#0.00 €" />
+                        </h:outputText>
+                    </f:facet>
+                    <f:facet name="input"><p:inputNumber value="#{billRow.unitPrice}" style="width:100%" label="Prix unitaire" decimalPlaces="2"/></f:facet>
+                </p:cellEditor>
+            </p:column>
+
+            <p:column style="width:32px">
+                <p:rowEditor />
+            </p:column>
+        </p:dataTable>
+    </h:form>
+
+</ui:composition>

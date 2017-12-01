@@ -15,21 +15,21 @@
                 <p:menuitem value=" Ajouter un client" url="/client/createClient.xhtml" icon="fa fa-user-plus fa-fw" />
             </p:submenu>
 
-            <p:submenu label="Pojets" icon="ui-icon-pencil">
-                <p:menuitem value="Liste des projets" url="/project/listProject.xhtml" icon="ui-icon-arrowreturnthick-1-w" />
-                <p:menuitem value="Créer un projet" url="/project/createProject.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
+            <p:submenu label="Pojets" icon="fa fa-tasks fa-fw">
+                <p:menuitem value="Liste des projets" url="/project/listProject.xhtml" icon="fa fa-list-ul fa-fw" />
+                <p:menuitem value="Créer un projet" url="/project/createProject.xhtml" icon="fa fa-plus fa-fw" />
             </p:submenu>
 
-            <p:submenu label="Facturation" icon="ui-icon-pencil">
-                <p:menuitem value="Lister une facture" url="/bill/listBill.xhtml" icon="ui-icon-arrowreturnthick-1-w" />
-                <p:menuitem value="Créer une facture" url="/bill/createBill.xhtml" icon="ui-icon-arrowreturnthick-1-e" />
+            <p:submenu label="Facturation" icon="fa fa-money">
+                <p:menuitem value="Lister une facture" url="/bill/listBill.xhtml" icon="fa fa-list-ul fa-fw" />
+                <p:menuitem value="Créer une facture" url="/bill/createBill.xhtml" icon="fa fa-cart-plus fa-fw" />
             </p:submenu>
 
-            <p:submenu label=" #{facesTools.currentUserName()} " icon="ui-icon-info">
-                <p:menuitem value="Informations de connexion" url="/userInfo/updateConnexionInfo.xhtml"/>
-                <p:menuitem value="Informations financière" url="/userInfo/updateBusinessInfo.xhtml"/>
-                <p:menuitem value="Informations personnel" url="/userInfo/updatePersonnalInfo.xhtml"/>
-                <p:menuitem value="Déconnexion" actionListener="#{app.logout()}" icon="ui-icon-close" />
+            <p:submenu label=" #{facesTools.currentUserName()} " icon="fa fa-info fa-fw">
+                <p:menuitem value="Informations de connexion" url="/userInfo/updateConnexionInfo.xhtml" icon="fa fa-sign-in fa-fw" />
+                <p:menuitem value="Informations financière" url="/userInfo/updateBusinessInfo.xhtml" icon="fa fa-eur fa-fw"/>
+                <p:menuitem value="Informations personnel" url="/userInfo/updatePersonnalInfo.xhtml" icon="fa fa-user fa-fw"/>
+                <p:menuitem value="Déconnexion" actionListener="#{app.logout()}" icon="fa fa-sign-out fa-fw" />
             </p:submenu>
         </p:menubar>
     </h:form>

@@ -50,4 +50,15 @@ public class BillRow extends BaseEntity implements Serializable{
     public void setBill(Bill bill) {
         this.bill = bill;
     }
+
+    @Override
+    public String toString() {
+        return "BillRow{" +
+                "label='" + label + '\'' +
+                ", amount=" + amount +
+                ", unitPrice=" + unitPrice +
+                ", bill=" + bill +
+                ", id=" + id +
+                "} " + super.toString();
+    }
 }

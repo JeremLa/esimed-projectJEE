@@ -6,12 +6,11 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:mep="http://MicroEnterpriseProject/tags">
 
-    <h:form id="billList">
+    <h:form>
         <p:dataTable value="#{billListController.bills}" var="bill" widgetVar="billTable" emptyMessage="Aucune facture à afficher" id="billTable"
-                     rows="25"
+                     rows="10"
                      paginator="true"
-                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                     rowsPerPageTemplate="25, 50, 100">>
+                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
 
             <p:column headerText="N°" >
                 <h:outputText value="#{bill.billNumber}"/>
@@ -38,11 +37,15 @@
             <p:column style="text-align: center">
                 <p:commandButton  icon="fa fa-eye" title="Détails"
                                   action="#{billFormController.setBill(bill)}"
-                                  oncomplete="PF('updateBill').show()" update="@widgetVar(updateBill)" process="@this"/>
+                                  oncomplete="PF('updateBill').show()" update="@widgetVar(updateBill)" process="@this">
+                    <f:actionListener binding="#{billRowFormController.populateListByBill(bill)}"/>
+                </p:commandButton>
 
-                <p:commandButton update="@form"  icon="fa fa-times" title="Supprimer" actionListener="#{billFormController.delete(bill)}" rendered="#{billFormController.haveBillRow(bill) == false}">
+                <p:commandButton update="@form"  icon="fa fa-times" title="Supprimer" actionListener="#{billFormController.delete(bill)}" rendered="#{billFormController.isPaid(bill) == false}">
                     <p:confirm header="Confirmation" message="Supprimer la facture n°#{bill.billNumber} ?" icon="fa fa-exclamation" />
                 </p:commandButton>
+
+                <p:commandButton icon="fa fa-exclamation-circle" style="color: red" type="button" onclick="PF('dialogLatePaid').show();" rendered="#{billFormController.latePaid(bill) == true}"/>
 
                 <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
                     <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-times" style="color: red"/>
@@ -51,7 +54,18 @@
             </p:column>
         </p:dataTable>
     </h:form>
-    <p:dialog header="Editer le projet" widgetVar="updateBill" modal="true" id="modalForUpdateBill">
-        <mep:billForm widgetName="updateBill"/>
+    <p:dialog header="Facture" widgetVar="updateBill">
+        <p:tabView>
+            <p:tab title="Facture">
+                <mep:billForm widgetName="updateBill"/>
+            </p:tab>
+            <p:tab title="Lignes Facture">
+                <mep:billRowList />
+            </p:tab>
+        </p:tabView>
+    </p:dialog>
+
+    <p:dialog header="Attention" widgetVar="dialogLatePaid" minHeight="40">
+        <h:outputText value="Le paiement de cette facture est en retard" />
     </p:dialog>
 </ui:composition>

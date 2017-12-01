@@ -154,18 +154,14 @@ public class Seeder{
 
         bill.setPaidLimiteDate(generateDate(2017, 1, 1));
 
-//        Integer doIt = random.nextInt(2);
-//
-//        if(doIt == 1){
-//
-//            bill.setBillStatus(BillStatus.PAID);
-//
-//            Date edited = bill.getEditedDate();
-//            Calendar c = Calendar.getInstance();
-//            c.setTime(edited);
-//
-//            bill.setPaidLimiteDate(generateDate(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE)));
-//        }
+        Integer doIt = random.nextInt(2);
+
+        if(doIt == 1){
+
+            bill.setBillStatus(BillStatus.PAID);
+
+            bill.setPaidDate(generateDate(2017, 1, 1));
+        }
 
         return bill;
     }

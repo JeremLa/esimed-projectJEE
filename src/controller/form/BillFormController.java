@@ -4,6 +4,7 @@ import dao.BillDAO;
 import dao.BillRowDAO;
 import dao.ProjectDAO;
 import entity.Bill;
+import entity.BillRow;
 import entity.Project;
 import entity.User;
 import entity.enumerable.BillStatus;
@@ -16,6 +17,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 @ViewScoped
@@ -30,15 +32,15 @@ public class BillFormController  implements Serializable{
     @Inject
     private User user;
 
-    private Bill bill;
+    private Bill bill = new Bill();
     private List<Project> projects;
     private BillStatus[] billStatuses;
     private PaymentMethods[] paymentMethods;
     private Boolean editMode = false;
+    private Boolean renderAlert = false;
 
     @PostConstruct
     private void init(){
-        bill = new Bill();
         projects = projectDAO.getAllByUser(user);
         billStatuses = BillStatus.values();
         paymentMethods = PaymentMethods.values();
@@ -58,13 +60,58 @@ public class BillFormController  implements Serializable{
         billDAO.update(bill);
 
         editMode = false;
+        renderAlert = false;
         FacesTools.addMessage(FacesMessage.SEVERITY_INFO, "Les modifications de la facture ont bien été enregistré.");
     }
 
     public void delete (Bill bill) {
+        List<BillRow> billRows = billRowDAO.getByBill(bill);
+
+        for(BillRow billRow : billRows){
+            billRowDAO.delete(billRow);
+        }
+
         billDAO.delete(bill);
 
         FacesTools.addMessage(FacesMessage.SEVERITY_INFO, "La facture a bien été supprimé.");
+    }
+
+    public Boolean latePaid(Bill bill){
+        return bill.getPaidLimiteDate().before(new Date()) && bill.getBillStatus() == BillStatus.SENT;
+    }
+
+    public Boolean isPaid(){
+        System.out.println(bill);
+        if(bill.getId() != null){
+            Bill billbon = billDAO.get(Bill.class, bill.getId());
+            System.out.println("bilbon "+billbon);
+            return billbon.getBillStatus() == BillStatus.PAID;
+        }
+
+        return bill.getBillStatus() == BillStatus.PAID;
+    }
+
+    public void StatusChange(){
+        if(bill.getBillStatus() == BillStatus.PAID){
+            bill.setPaidDate(new Date());
+            renderAlert = true;
+        }else{
+            renderAlert = false;
+        }
+    }
+
+    public Boolean getRenderAlert() {
+        return renderAlert;
+    }
+
+    public void setRenderAlert(Boolean renderAlert) {
+        this.renderAlert = renderAlert;
+    }
+
+    public Boolean isPaid(Bill bill){
+
+            return bill.getBillStatus() == BillStatus.PAID;
+
     }
 
     public boolean haveBillRow(Bill bill){
@@ -83,6 +130,8 @@ public class BillFormController  implements Serializable{
     public void setBill(Bill bill) {
         editMode = true;
         this.bill = bill;
+
+        System.out.println(this.bill);
     }
 
     public Boolean getEditMode() {

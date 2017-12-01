@@ -3,15 +3,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
 <h:head>
+    <f:facet name="first|middle|last">
+        <h:outputStylesheet library="css" name="default.css" />
+    </f:facet>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title> #{app.appName} - #{app.title}</title>
 </h:head>
     <h:body>
 
-        <p:growl id="growl" sticky="true" showDetail="false" autoUpdate="true"/>
+        <p:growl id="growl" life="3000" showDetail="false" autoUpdate="true"/>
 
         <ui:insert name="menu">
             <ui:include src="includes/menu.xhtml"/>

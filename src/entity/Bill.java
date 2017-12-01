@@ -89,4 +89,20 @@ public class Bill extends BaseEntity implements Serializable{
     public void setProject(Project project) {
         this.project = project;
     }
+
+    @Override
+    public String toString() {
+        return "Bill{" +
+                "billNumber=" + billNumber +
+                ", billStatus=" + billStatus +
+                ", editedDate=" + editedDate +
+                ", paidLimiteDate=" + paidLimiteDate +
+                ", paidDate=" + paidDate +
+                ", paymentMethods=" + paymentMethods +
+                ", note='" + note + '\'' +
+                ", project=" + project +
+                ", id=" + id +
+                "} " + super.toString();
+    }
+
 }

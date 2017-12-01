@@ -44,6 +44,11 @@ public class BillListController implements Serializable{
         bills = billDAO.getByClient(client);
     }
 
+    public void getByProject(Project project){
+        bills = billDAO.getByProject(project);
+        fromProject = true;
+    }
+
     public User getUser() {
         return user;
     }

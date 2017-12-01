@@ -61,9 +61,6 @@ public class ClientController implements Serializable{
     }
 
     public void removeClient(Client client){
-
-        System.out.println("//////////////////////////////////// "+ client.getId() + "////////////////////////////////////");
-
         clientDAO.delete(client);
         clients.remove(client);
     }
